@@ -1,0 +1,42 @@
+@import "../../styles/variables.scss";
+
+.main__info {
+    margin-top: 30px;
+    position: relative;
+
+    .navbar {
+        .nav__list {
+            display: flex;
+            flex-direction: column;
+            gap: 45px;
+
+            li {
+                display: flex;
+                align-items: center;
+
+                a {
+                    color: #18333E;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+
+                img {
+                    margin-right: 10px;
+                    // margin-right: 40px;
+                }
+
+                .active_page__nav {
+                    display: block;
+                    position: absolute;
+                    width: 65px;
+                    left: 0;
+                    background-color: $yellow-color;
+                    border-radius: 0px 20px 20px 0px;
+                    padding: 25px 0;
+                    z-index: -1;
+                }
+            }
+        }
+    }
+}
