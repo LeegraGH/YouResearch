@@ -1,0 +1,79 @@
+@import "../../styles/variables.scss";
+
+footer {
+    background-color: $main-color;
+
+    .footer {
+        &__nav {
+            height: 150px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 28px;
+
+            .contacts {
+                &__info {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 12px;
+                    flex-wrap: nowrap;
+
+                    color: rgba(255, 255, 255, 0.54);
+                    font-size: 14px;
+                    font-weight: 300;
+                }
+            }
+
+            .menu {
+                &__list {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    gap: 25px;
+                    flex-wrap: nowrap;
+
+                    color: rgba(255, 255, 255, 0.54);
+                    font-size: 14px;
+                    font-weight: 300;
+                }
+            }
+
+            .rights {
+                color: rgba(255, 255, 255, 0.54);
+                font-size: 14px;
+                font-weight: 300;
+                text-align: right;
+
+                & div:first-child {
+                    margin-bottom: 8px;
+                }
+            }
+        }
+
+        &__article {
+            color: #F9F9F9;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+    }
+}
+
+// @media screen and (max-width: 996px) {
+
+//     footer {
+//         .footer {
+//             &__nav {
+//                 flex-direction: row;
+//                 justify-content: space-around;
+//                 align-items: center;
+//                 align-content: center;
+//                 gap: 30px;
+//                 flex-wrap: wrap;
+//             }
+//         }
+//     }
+// }
