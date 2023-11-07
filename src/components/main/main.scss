@@ -24,13 +24,12 @@
                 display: flex;
                 align-items: center;
                 position: relative;
+                width: fit-content;
 
-                a {
-                    color: #18333E;
-                    font-size: 14px;
-                    font-weight: 500;
-                    line-height: normal;
-                }
+                color: #18333E;
+                font-size: 14px;
+                font-weight: 500;
+                line-height: normal;
 
                 .wrap__img {
                     width: 30px;

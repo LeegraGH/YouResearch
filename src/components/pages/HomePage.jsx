@@ -1,9 +1,9 @@
 import Main from "../main/Main";
-import Home from "../home/Home";
+import SearchPanel from "../searchPanel/SearchPanel";
 
 const HomePage = () => {
     return (
-        <Main Compoment={Home} />
+        <Main Compoment={SearchPanel} />
     )
 }
 

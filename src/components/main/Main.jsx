@@ -22,8 +22,8 @@ const Main = ({ Compoment }) => {
                             <NavigationItem to="/" src={home} name="Главная" color="#FDDC63" />
                             <NavigationItem to="/dictionary" src={dictionary} name="Словарь" color="#6BDDC8" />
                             <NavigationItem to="/favourite" src={heart} name="Избранное" color="#F973AB" />
-                            <NavigationItem to="/collections" src={collections} name="Коллекции" color="#FDDC63" />
-                            <NavigationItem to="/profile" src={profile} name="Профиль" color="#6BDDC8" />
+                            <NavigationItem to="/collections" src={collections} name="Коллекции" color="#a68beb" />
+                            <NavigationItem to="/profile" src={profile} name="Профиль" color="#7eaceb" />
                             <NavigationItem to="/theme" src={moon} name="Цвет темы" />
                             <NavigationItem to="/logout" src={logout} name="Выйти" />
                         </ul>
