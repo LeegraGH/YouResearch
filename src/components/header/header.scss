@@ -2,7 +2,8 @@
 
 header {
     background-color: rgba(255, 255, 255, 0);
-    margin-top: 30px;
+    padding-top: 30px;
+    margin-bottom: 80px;
 
     .header {
         &__nav {
@@ -45,40 +46,6 @@ header {
                         }
                     }
                 }
-            }
-        }
-
-        &__search {
-
-            input {
-                background: url("../../resources/icons/search-main.svg") left 15px center no-repeat #E9F1FA;
-                border: none;
-                padding: 15px;
-                padding-left: 45px;
-                border-radius: 12px;
-                margin-right: 25px;
-                width: 450px;
-
-                color: #738C96;
-                font-size: 12px;
-                font-weight: 400;
-                line-height: normal;
-
-                &:focus {
-                    outline: none;
-                }
-            }
-
-            button {
-                border-radius: 12px;
-                background: #18333E;
-                border: none;
-                padding: 15px;
-
-                color: #FFF;
-                font-size: 12px;
-                font-weight: 500;
-                line-height: normal;
             }
         }
     }

@@ -1,18 +1,29 @@
 @import "../../styles/variables.scss";
 
 .main__info {
-    margin-top: 30px;
-    position: relative;
+    // margin-top: 80px;
+    height: 100%;
 
-    .navbar {
+    .grid__content {
+        display: grid;
+        grid-template-columns: 200px auto;
+    }
+
+    .sidebar {
+        position: relative;
+
         .nav__list {
             display: flex;
             flex-direction: column;
             gap: 45px;
 
-            li {
+            // position: fixed;
+            z-index: 1;
+
+            .nav__link {
                 display: flex;
                 align-items: center;
+                position: relative;
 
                 a {
                     color: #18333E;
@@ -21,22 +32,66 @@
                     line-height: normal;
                 }
 
-                img {
+                .wrap__img {
+                    width: 30px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     margin-right: 10px;
-                    // margin-right: 40px;
                 }
 
                 .active_page__nav {
                     display: block;
                     position: absolute;
                     width: 65px;
-                    left: 0;
-                    background-color: $yellow-color;
+                    left: -25px;
                     border-radius: 0px 20px 20px 0px;
                     padding: 25px 0;
                     z-index: -1;
                 }
             }
+        }
+    }
+
+    main {
+        min-height: 600px;
+        position: relative;
+
+        .rectangle-yellow {
+            position: absolute;
+            top: 0;
+            margin-top: -163px;
+            z-index: -1;
+
+            border-radius: 0px 0px 50px 50px;
+            background: $yellow-color;
+            width: 250px;
+            height: 450px;
+        }
+
+        .rectangle-pink {
+            position: absolute;
+            bottom: 0;
+            margin-bottom: -155px;
+            z-index: -1;
+
+            border-radius: 0px 50px 50px 0px;
+            background: $pink-color;
+            width: 600px;
+            height: 250px;
+        }
+
+        .rectangle-mint {
+            position: absolute;
+            right: 0;
+            margin-right: -24px;
+            z-index: -1;
+
+            border-radius: 50px 0px 0px 50px;
+            background: $mint-color;
+            width: 600px;
+            height: 250px;
         }
     }
 }

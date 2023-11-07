@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import home from "../../resources/icons/home.svg";
 import profile from "../../resources/icons/profile.svg";
@@ -10,33 +10,49 @@ import moon from "../../resources/icons/moon.svg";
 import logout from "../../resources/icons/logout.svg";
 import "./main.scss";
 
-const Main = () => {
+const Main = ({ Compoment }) => {
 
-    // const imgRef
-
-    // const onActivePage = () => {
-
-    // }
 
     return (
         <div className="main__info">
             <Container maxWidth="xl">
-                <aside className="navbar">
-                    <ul className="nav__list">
-                        <li> <span className="active_page__nav"></span> <img src={home} alt="home" style={{ marginRight: 40 }} /><a href="">Главная</a></li>
-                        <li><img src={dictionary} alt="dictionary" /><a href="">Словарь</a></li>
-                        <li><img src={heart} alt="favourite" /><a href="">Избранное</a></li>
-                        <li><img src={collections} alt="collections" /><a href="">Коллекции</a></li>
-                        <li><img src={profile} alt="profile" /><a href="">Профиль</a></li>
-                        <li><img src={moon} alt="theme" /><a href="">Цвет темы</a></li>
-                        <li><img src={logout} alt="logout" /><a href="">Выйти</a></li>
-                    </ul>
-                </aside>
-                <main>
-
-                </main>
+                <div className="grid__content">
+                    <aside className="sidebar">
+                        <ul className="nav__list">
+                            <NavigationItem to="/" src={home} name="Главная" color="#FDDC63" />
+                            <NavigationItem to="/dictionary" src={dictionary} name="Словарь" color="#6BDDC8" />
+                            <NavigationItem to="/favourite" src={heart} name="Избранное" color="#F973AB" />
+                            <NavigationItem to="/collections" src={collections} name="Коллекции" color="#FDDC63" />
+                            <NavigationItem to="/profile" src={profile} name="Профиль" color="#6BDDC8" />
+                            <NavigationItem to="/theme" src={moon} name="Цвет темы" />
+                            <NavigationItem to="/logout" src={logout} name="Выйти" />
+                        </ul>
+                    </aside>
+                    <main>
+                        <div className="rectangle-yellow"></div>
+                        <div className="rectangle-pink"></div>
+                        <div className="rectangle-mint"></div>
+                        <Compoment />
+                    </main>
+                </div>
             </Container>
         </div>
+    )
+}
+
+const NavigationItem = ({ to, src, name, color }) => {
+    return (
+        <li>
+            <NavLink to={to} className="nav__link">
+                {({ isActive }) => (
+                    <>
+                        {isActive ? <span className="active_page__nav" style={{ backgroundColor: color }}></span> : null}
+                        <span className="wrap__img" style={isActive ? { marginRight: 20 } : null}><img src={src} alt={name} /></span>
+                        {name}
+                    </>
+                )}
+            </NavLink>
+        </li>
     )
 }
 
