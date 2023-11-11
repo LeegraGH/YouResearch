@@ -8,11 +8,23 @@ const useDictionaryService = () => {
 
     const getDictionaryEntry = async (data, lang = "en-ru") => {
         const res = await request(`${_apiBase}?key=${_apiKey}&lang=${lang}&text=${data}`);
-
-        return res.def;
+        return _transformDictonaryEntry(res.def);
+        // return res.def;
     }
 
-    // const _transformDictonaryEntry 
+    const _transformDictonaryEntry = (data) => {
+        const res = data.map(entry => {
+            const translations = entry.tr.filter(tr => tr.fr >= 5).map(tr => {
+                const synonyms = tr.syn?.filter(syn => syn.fr >= 5);
+                if (synonyms !== undefined) {
+                    return { ...tr, syn: synonyms }
+                } else return { ...tr, syn: [] };
+            });
+            return translations.length > 0 ? { ...entry, tr: translations } : null;
+        }).filter(entry => entry !== null);
+        console.log(res);
+        return res;
+    }
 
     return { getDictionaryEntry };
 }

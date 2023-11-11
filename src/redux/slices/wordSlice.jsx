@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import useDictionaryService from "../../services/DictonaryService";
 
 const initialState = {
-    data: null,
+    data: [],
     status: 'idle'
 };
 
