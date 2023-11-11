@@ -9,7 +9,6 @@ const useDictionaryService = () => {
     const getDictionaryEntry = async (data, lang = "en-ru") => {
         const res = await request(`${_apiBase}?key=${_apiKey}&lang=${lang}&text=${data}`);
         return _transformDictonaryEntry(res.def);
-        // return res.def;
     }
 
     const _transformDictonaryEntry = (data) => {
@@ -22,7 +21,6 @@ const useDictionaryService = () => {
             });
             return translations.length > 0 ? { ...entry, tr: translations } : null;
         }).filter(entry => entry !== null);
-        console.log(res);
         return res;
     }
 

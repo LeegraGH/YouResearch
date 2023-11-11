@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { Skeleton } from "@mui/material";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
 import plus from "../../resources/icons/plus-circle.svg";
@@ -6,75 +7,92 @@ import "./wordTranslate.scss";
 
 const WordTranslate = () => {
 
-    const wordData = useSelector(state => state.word);
+    const { data, status } = useSelector(state => state.word);
+
+    const translateContent = data?.map((word, i) => {
+        return <WordTranslateBlock data={word} key={i} />
+    })
 
     return (
         <div className="translate__block">
-            <div className="translate__title_section">
-                <h2>Словарь</h2>
-                <div className="tabs">
-                    <div className="tab"><img src={empty_heart} alt="favourite" /></div>
-                    <div className="tab"><img src={plus} alt="adding" /></div>
-                </div>
-            </div>
-            <div className="translate__main_section">
-                <div className="translate-word__block">
-                    <div className="text">
-                        <h3>home</h3>
-                        <div className="transcription">[həʊm]<span>, adjective</span></div>
-                    </div>
-                    <ol className="translate-word__list">
-                        <li>
-                            <div className="translate-variant">домашний <span>м</span></div>
-                            <div className="translate-variant">бытовой <span>м</span></div>
-                            <div className="translate-mean">Значение: household</div>
-                        </li>
-
-                        <li>
-                            <div className="translate-variant">внутренний <span>м</span></div>
-                            <div className="translate-variant">отечественный <span>м</span></div>
-                            <div className="translate-mean">Значение: internal, domestic</div>
-                        </li>
-
-                        <li>
-                            <div className="translate-variant">родной <span>м</span></div>
-                            <div className="translate-mean">Значение: native</div>
-                        </li>
-
-                        <li>
-                            <div className="translate-variant">главный <span>м</span></div>
-                            <div className="translate-mean">Значение: main</div>
-                        </li>
-                    </ol>
-                </div>
-
-                <div className="translate-word__block">
-                    <div className="text">
-                        <h3>home</h3>
-                        <div className="transcription">[həʊm]<span>, noun</span></div>
-                    </div>
-                    <ol className="translate-word__list">
-                        <li>
-                            <div className="translate-variant">родина <span>ж</span></div>
-                            <div className="translate-mean">Значение: homeland</div>
-                        </li>
-
-                        <li>
-                            <div className="translate-variant">жилище <span>ср</span></div>
-                            <div className="translate-variant">жилье <span>ср</span></div>
-                            <div className="translate-variant">проживание <span>ср</span></div>
-                            <div className="translate-mean">Значение: house, housing, residence</div>
-                        </li>
-                    </ol>
-                </div>
-            </div>
+            {data !== null ?
+                (data.length > 0 ?
+                    (<>
+                        <div className="translate__title_section">
+                            <h2>Словарь</h2>
+                            <div className="tabs">
+                                <button className="tab"><img src={empty_heart} alt="favourite" /></button>
+                                <button className="tab"><img src={plus} alt="adding" /></button>
+                            </div>
+                        </div>
+                        <div className="translate__main_section">
+                            {translateContent}
+                        </div>
+                    </>) : (
+                        <div>Ничего не найдено...</div>
+                    )) : (
+                    <>
+                        <div className="translate__title_section">
+                            <h2>{<Skeleton variant="rounded" width={200} height={30} />}</h2>
+                            <div className="tabs">
+                                <Skeleton variant="circular" width={53} height={53} />
+                                <Skeleton variant="circular" width={53} height={53} />
+                            </div>
+                        </div>
+                        <div className="translate__main_section">
+                            <Skeleton variant="rounded" width={250} height={20} />
+                            <Skeleton variant="rounded" width={350} height={40} />
+                            <Skeleton variant="rounded" width={350} height={40} />
+                            <Skeleton variant="rounded" width={350} height={40} />
+                            <br />
+                            <Skeleton variant="rounded" width={250} height={20} />
+                            <Skeleton variant="rounded" width={350} height={40} />
+                            <Skeleton variant="rounded" width={350} height={40} />
+                            <Skeleton variant="rounded" width={350} height={40} />
+                        </div>
+                    </>
+                )}
         </div>
     )
 }
 
-const WordTranslateBlock = () => {
+const WordTranslateBlock = ({ data }) => {
+    const onLoadTranslateList = (translations) => {
+        const newData = translations.map((translation, i) => {
+            const synonyms = translation.syn?.map((syn, i) => {
+                return <div key={i} className="translate-variant">{syn.text}{syn.gen ? (<span> {syn.gen}</span>) : null}</div>
+            })
+
+            const means = translation.mean?.reduce((acc, syn, i) => {
+                if (i !== 0) acc = acc + ", " + syn.text;
+                else acc = acc + syn.text;
+                return acc;
+            }, "");
+            return (
+                <li key={i}>
+                    <div className="translate-variant">{translation.text}{translation.gen ? (<span> {translation.gen}</span>) : null}</div>
+                    {synonyms}
+                    {means !== undefined ? <div className="translate-mean">Значение: {means}</div> : null}
+                </li >
+            )
+        })
+        return (
+            <ol className="translate-word__list">
+                {newData}
+            </ol>
+        )
+    }
+
+    const translations = onLoadTranslateList(data.tr);
+
     return (
-        <div></div>
+        <div className="translate-word__block">
+            <div className="text">
+                <h3>{data.text}</h3>
+                <div className="transcription">{`[${data.ts}]`}{data.pos ? (<span>, {data.pos}</span>) : null}</div>
+            </div>
+            {translations}
+        </div>
     )
 }
 
