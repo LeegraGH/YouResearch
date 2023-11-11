@@ -12,7 +12,6 @@ import "./main.scss";
 
 const Main = ({ Compoment }) => {
 
-
     return (
         <div className="main__info">
             <Container maxWidth="xl">

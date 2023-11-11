@@ -4,15 +4,23 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-
-    padding-bottom: 50px;
+    padding: 50px 0 80px 0;
 
     h1 {
-        font-size: 26px;
+        color: #18333E;
+        font-family: Black Ops One;
+        font-size: 250px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        height: min-content;
     }
 
-    img {
-        width: 800px;
-        height: auto;
+    h3 {
+        color: #000;
+        text-align: center;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 400;
     }
 }

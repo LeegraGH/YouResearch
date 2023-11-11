@@ -1,7 +1,9 @@
+import { useState } from "react";
 
 import "./wordTranslate.scss";
 
 const WordTranslate = () => {
+
     return (
         <div className="translate__block">
             <div className="dictionary-word">

@@ -14,11 +14,25 @@ header {
             // padding-top: 30px;
             gap: 10px;
 
+            .search-word {
+                width: 60%;
+
+                .word__block__error {
+                    display: none;
+                }
+            }
+
             .title {
                 color: #18333E;
                 font-size: 22px;
                 font-weight: 600;
                 line-height: normal;
+                width: fit-content;
+                text-wrap: nowrap;
+
+                a {
+                    width: inherit;
+                }
             }
 
             .nav {
@@ -35,16 +49,18 @@ header {
                         height: 53px;
                         border: 1px solid $main-border-color;
                         border-radius: 27px;
-
-                        a {
-                            width: 100%;
-                            height: 100%;
-                            border-radius: 27px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                        }
                     }
+                }
+
+                &__tab {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 27px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    cursor: pointer;
                 }
             }
         }
