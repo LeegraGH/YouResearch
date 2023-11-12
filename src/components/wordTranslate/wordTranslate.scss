@@ -80,6 +80,18 @@
                         font-weight: 500;
                     }
                 }
+
+                .verbs {
+                    color: #18333E;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: normal;
+                    margin-top: 10px;
+
+                    span {
+                        font-style: italic;
+                    }
+                }
             }
 
             .translate-word__list {

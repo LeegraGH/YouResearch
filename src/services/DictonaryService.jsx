@@ -8,6 +8,7 @@ const useDictionaryService = () => {
 
     const getDictionaryEntry = async (data, lang = "en-ru") => {
         const res = await request(`${_apiBase}?key=${_apiKey}&lang=${lang}&text=${data}`);
+        console.log(res);
         return _transformDictonaryEntry(res.def);
     }
 

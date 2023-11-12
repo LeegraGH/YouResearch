@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { Skeleton } from "@mui/material";
+import { useMemo } from "react";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
 import plus from "../../resources/icons/plus-circle.svg";
@@ -12,6 +13,20 @@ const WordTranslate = () => {
     const translateContent = data?.map((word, i) => {
         return <WordTranslateBlock data={word} key={i} />
     })
+
+    const skeletonBlock = useMemo(() => {
+        const skeletonSection = [
+            <Skeleton key={0} variant="rounded" width={250} height={25} />,
+            ...[...Array(3)].map((el, i) => <Skeleton key={i + 1} variant="rounded" width={"100%"} height={40} />)
+        ];
+        return (
+            <>
+                {skeletonSection}
+                <br />
+                {skeletonSection}
+            </>
+        )
+    }, []);
 
     return (
         <div className="translate__block">
@@ -40,15 +55,7 @@ const WordTranslate = () => {
                             </div>
                         </div>
                         <div className="translate__main_section">
-                            <Skeleton variant="rounded" width={250} height={20} />
-                            <Skeleton variant="rounded" width={350} height={40} />
-                            <Skeleton variant="rounded" width={350} height={40} />
-                            <Skeleton variant="rounded" width={350} height={40} />
-                            <br />
-                            <Skeleton variant="rounded" width={250} height={20} />
-                            <Skeleton variant="rounded" width={350} height={40} />
-                            <Skeleton variant="rounded" width={350} height={40} />
-                            <Skeleton variant="rounded" width={350} height={40} />
+                            {skeletonBlock}
                         </div>
                     </>
                 )}
@@ -89,7 +96,8 @@ const WordTranslateBlock = ({ data }) => {
         <div className="translate-word__block">
             <div className="text">
                 <h3>{data.text}</h3>
-                <div className="transcription">{`[${data.ts}]`}{data.pos ? (<span>, {data.pos}</span>) : null}</div>
+                <div className="transcription">{data.ts ? `[${data.ts}], ` : null}{data.pos ? (<span>{data.pos}</span>) : null}</div>
+                {data.fl ? <div className="verbs">Другие формы глагола: <span>{data.fl}</span></div> : null}
             </div>
             {translations}
         </div>
