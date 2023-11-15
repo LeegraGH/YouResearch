@@ -9,9 +9,9 @@ const initialState = {
 
 export const fetchWord = createAsyncThunk(
     "word/fetchWord",
-    async (word) => {
+    async ({ word, lang }) => {
         const { getDictionaryEntry } = useDictionaryService();
-        return await getDictionaryEntry(word);
+        return await getDictionaryEntry(word, lang);
     }
 )
 
@@ -19,7 +19,8 @@ const wordSlice = createSlice({
     name: "word",
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(fetchWord.pending, (state) => { state.status = 'loading' })
+        builder
+            .addCase(fetchWord.pending, (state) => { state.status = 'loading' })
             .addCase(fetchWord.fulfilled, (state, action) => {
                 state.status = "idle";
                 state.data = action.payload;

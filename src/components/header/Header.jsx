@@ -18,7 +18,7 @@ const Header = () => {
     const [searchTab, setSearchTab] = useState(false);
 
     useEffect(() => {
-        if (location.pathname === "/dictionary") setSearchTab(true);
+        if (location.pathname !== "/") setSearchTab(true);
         else setSearchTab(false);
     }, [location])
 

@@ -1,11 +1,12 @@
 
+import not_found from "../../resources/img/404.svg";
 import "./notFound.scss";
 
 const NotFound = () => {
     return (
         <div className="not-found__block">
-            <h1>404</h1>
-            <h3>Мы, люди, иногда не можем найти слов - <br />сегодня же мы не смогли найти страницу</h3>
+            <img src={not_found} alt="404 not found" />
+            <div className="not-found__message">Мы, люди, иногда не можем найти слов - <br />сегодня же мы не смогли найти страницу</div>
         </div>
     )
 }
