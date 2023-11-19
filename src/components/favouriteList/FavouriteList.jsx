@@ -1,31 +1,30 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
-import { selectAll, fetchFavourites } from "../../redux/slices/favouritesSlice";
-
+import { useCallback } from "react";
+import { useGetFavouriteWordsQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
 import FlashCard from "../flashCard/FlashCard";
 
 import "./favouriteList.scss";
 
 const FavoriteList = () => {
 
-    const favourites = useSelector(selectAll);
-    const dispatch = useDispatch();
+    const { data = [], isLoading, isFetching, isError, refetch, error } = useGetFavouriteWordsQuery();
 
-    useEffect(() => {
-        dispatch(fetchFavourites());
+    const [deleteWord] = useDeleteFavouriteWordMutation();
+
+    const deleteFavourite = useCallback((id) => {
+        deleteWord({ wordId: id });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
-    const onLoadFavourites = () => {
-        const data = favourites.map(({ id, word, translation }) => {
-            return <FlashCard key={id} word={word} translation={translation} />
+    const onLoadFavourites = (data) => {
+        const favourites = data?.map(({ id, word, translation }) => {
+            return <FlashCard key={id} deleteFavourite={() => deleteFavourite(id)} word={word} translation={translation} />
         })
 
-        return data;
+        return favourites;
     }
 
-    const content = onLoadFavourites();
+    const content = onLoadFavourites(data);
 
     return (
         <div className="favourite__block">

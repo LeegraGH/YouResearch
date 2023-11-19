@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import wordReducer from "./slices/wordSlice";
-import favouritesReducer from "./slices/favouritesSlice";
+import { apiSlice } from "./slices/apiSlice";
 
 const store = configureStore({
     reducer: {
         word: wordReducer,
-        favourites: favouritesReducer
+        [apiSlice.reducerPath]: apiSlice.reducer
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(apiSlice.middleware),
     devTools: process.env.NODE_ENV !== 'production'
 });
 

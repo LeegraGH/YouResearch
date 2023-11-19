@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import useDictionaryService from "../../services/DictonaryService";
+import useDictionaryService from "../../services/api/DictonaryService";
 
 const initialState = {
     data: null,

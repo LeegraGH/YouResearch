@@ -1,11 +1,11 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
-import { v4 as uuidv4 } from 'uuid';
+import { skipToken } from "@reduxjs/toolkit/query";
 
 import ErrorMessage from "../errorMessage/ErrorMessage";
-import { addFavourite } from "../../redux/slices/favouritesSlice";
+import { useAddFavouriteWordMutation, useGetFavouriteWordQuery } from "../../redux/slices/apiSlice";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
 import heart from "../../resources/icons/heart.svg";
@@ -17,18 +17,36 @@ const WordTranslate = () => {
     const [favouriteStatus, setFavouriteStatus] = useState(false);
 
     const { data, status } = useSelector(state => state.word);
-    const dispatch = useDispatch();
+
+    const [addWord] = useAddFavouriteWordMutation();
+
+    const query = (status === "idle" && data !== null && data.length > 0) ? { word: { word: data[0].text, part: data[0].pos } } : skipToken;
+
+    const { data: favourite } = useGetFavouriteWordQuery(query);
+    useEffect(() => {
+        if (status === "idle" && data !== null) {
+            if (favourite?.length > 0) {
+                setFavouriteStatus(true);
+            } else {
+                setFavouriteStatus(false);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, favourite]);
 
     const toggleFavourite = () => {
-
-        setFavouriteStatus(favouriteStatus => !favouriteStatus);
-
-        const favourite = {
-            id: uuidv4(),
-            word: data[0].text,
-            translation: data[0].tr[0].text
-        };
-        dispatch(addFavourite(favourite));
+        if (favouriteStatus) {
+            setFavouriteStatus(false);
+            // удаление из избранного 
+        } else {
+            const word = {
+                part: data[0].pos,
+                translation: data[0].tr[0].text,
+                word: data[0].text
+            }
+            setFavouriteStatus(true);
+            addWord({ word });
+        }
     }
 
     const onLoadSkeletonBlock = useMemo(() => {
