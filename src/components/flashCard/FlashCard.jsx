@@ -8,11 +8,11 @@ const FlashCard = ({ id, word, translation, deleteFavourite }) => {
 
     return (
         <div className="card">
-            <div onClick={deleteFavourite} className="tab"><img src={heart} alt="favourite" /></div>
             <div className="translate-word">
+                <div onClick={deleteFavourite} className="tab"><img src={heart} alt="favourite" /></div>
                 <div>{word}</div>
-                <div>{translation}</div>
             </div>
+            <div>{translation}</div>
         </div>
     )
 }

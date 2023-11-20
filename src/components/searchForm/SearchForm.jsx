@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from "react-redux";
 
 import { fetchWord } from "../../redux/slices/wordSlice";
+import { detectLanguage } from "../utils/Alphabet";
 
 import "./searchForm.scss";
 
@@ -11,13 +12,6 @@ const SearchForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let location = useLocation();
-
-    const detectLanguage = (word) => {
-        const enAlphabet = "abcdefghijklmnopqrstuvwxyz";
-        if (enAlphabet.includes(word[0])) {
-            return "en-ru";
-        } else return "ru-en";
-    }
 
     const onSubmitWord = (word) => {
         const lang = detectLanguage(word.toLowerCase());

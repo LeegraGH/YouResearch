@@ -1,5 +1,5 @@
 
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
@@ -15,27 +15,21 @@ const FavoriteList = () => {
     const [deleteWord] = useDeleteFavouriteWordMutation();
     const searchFavourite = useContext(FavouriteContext);
 
-    const deleteFavourite = useCallback((id) => {
-        deleteWord({ wordId: id });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const onLoadFavourites = (data) => {
-        if (searchFavourite !== "") {
-            return data.filter(({ word }) => word.includes(searchFavourite)).map(({ id, word, translation }) => {
-                return <FlashCard key={id} deleteFavourite={() => deleteFavourite(id)} word={word} translation={translation} />
-            })
-        } else {
-            return data.map(({ id, word, translation }) => {
-                return <FlashCard key={id} deleteFavourite={() => deleteFavourite(id)} word={word} translation={translation} />
-            })
-        }
+        return (searchFavourite === "" ? data : data.filter(({ word }) => word.includes(searchFavourite))).map(({ id, word, translation }) => {
+            return <FlashCard key={id} deleteFavourite={() => deleteWord({ wordId: id })} word={word} translation={translation} />
+        })
     }
 
     const onLoadContent = (data) => {
         if (isSuccess) {
             if (data.length > 0) {
-                return onLoadFavourites(data);
+                const words = onLoadFavourites(data);
+                return words.length > 0 ?
+                    <div className="favourite__section">
+                        {words}
+                    </div> :
+                    <ErrorMessage>Не найдено ни одного слова...</ErrorMessage>;
             } else return <ErrorMessage>В Вашем Избранном пока что пусто...</ErrorMessage>;
         } else if (isLoading || isFetching) {
             return <Spinner />;
@@ -47,9 +41,7 @@ const FavoriteList = () => {
     return (
         <div className="favourite__block">
             <h2 className="title">Избранное</h2>
-            <div className="favourite__section">
-                {content}
-            </div>
+            {content}
         </div>
     )
 }

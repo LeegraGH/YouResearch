@@ -10,7 +10,6 @@ const useDictionaryService = () => {
         const ui = lang.slice(0, 2);
         const flags = ui === "ru" ? 10 : 8;
         const res = await request(`${_apiBase}?key=${_apiKey}&lang=${lang}&ui=${ui}&flags=${flags}&text=${data}`);
-
         return _transformDictonaryEntry(res.def);
     }
 

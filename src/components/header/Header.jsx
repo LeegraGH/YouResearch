@@ -1,6 +1,7 @@
 import { Container } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 import SearchForm from '../searchForm/SearchForm';
 import FavouriteFilter from '../favouriteFilter/FavouriteFilter';
@@ -34,11 +35,33 @@ const Header = ({ onLoadFavourite }) => {
                     <div className="title"><Link to="/">Word Anixx</Link></div>
                     {searchTab ? (location.pathname === "/favourite" ? <FavouriteFilter onLoadFavourite={onLoadFavourite} /> : <SearchForm />) : null}
                     <ul className='nav__list'>
-                        {(location.pathname !== "/" && location.pathname !== "/favourite") ? <li><div onClick={onLoadSearchBlock} className='nav__tab'><img src={search} alt="search word" /></div></li> : null}
-                        <li><Link className='nav__tab' to="/favourite"><img src={heart} alt="favourite" /></Link></li>
-                        <li><Link className='nav__tab' to="/"><img src={collection} alt="collection" /></Link></li>
-                        <li><Link className='nav__tab' to="/"><img src={moon} alt="theme" /></Link></li>
-                        <li><Link className='nav__tab' to="/"><img src={profile} alt="profile" /></Link></li>
+                        {(location.pathname !== "/" && location.pathname !== "/favourite") ?
+                            <motion.li
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.9 }}><div onClick={onLoadSearchBlock} className='nav__tab'><img src={search} alt="search word" /></div>
+                            </motion.li>
+                            : null
+                        }
+                        <motion.li
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}>
+                            <Link className='nav__tab' to="/favourite"><img src={heart} alt="favourite" /></Link>
+                        </motion.li>
+                        <motion.li
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}>
+                            <Link className='nav__tab' to="/"><img src={collection} alt="collection" /></Link>
+                        </motion.li>
+                        <motion.li
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}>
+                            <Link className='nav__tab' to="/"><img src={moon} alt="theme" /></Link>
+                        </motion.li>
+                        <motion.li
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}>
+                            <Link className='nav__tab' to="/"><img src={profile} alt="profile" /></Link>
+                        </motion.li>
                     </ul>
 
                 </div>

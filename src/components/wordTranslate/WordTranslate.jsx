@@ -2,10 +2,13 @@ import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { skipToken } from "@reduxjs/toolkit/query";
+import { motion } from "framer-motion";
 
+import { formatPartOfSpeech } from "../utils/PartsOfSpeech";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import Spinner from "../spinner/Spinner";
-import { useAddFavouriteWordMutation, useGetFavouriteWordQuery } from "../../redux/slices/apiSlice";
+import { useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
+import { isEnglish } from "../utils/Alphabet";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
 import heart from "../../resources/icons/heart.svg";
@@ -15,14 +18,17 @@ import "./wordTranslate.scss";
 const WordTranslate = () => {
 
     const [favouriteStatus, setFavouriteStatus] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const { data, status } = useSelector(state => state.word);
 
     const [addWord] = useAddFavouriteWordMutation();
+    const [deleteWord] = useDeleteFavouriteWordMutation();
 
-    const query = (status === "idle" && data !== null && data.length > 0) ? { word: { word: data[0].text, part: data[0].pos } } : skipToken;
+    const query = (status === "idle" && data !== null && data.length > 0) ? { word: isEnglish(data[0].text) ? { word: data[0].text, part: data[0].pos } : { word: data[0].tr[0].text, part: formatPartOfSpeech(data[0].pos) } } : skipToken;
 
     const { data: favourite } = useGetFavouriteWordQuery(query);
+
     useEffect(() => {
         if (status === "idle" && data !== null) {
             if (favourite?.length > 0) {
@@ -35,17 +41,30 @@ const WordTranslate = () => {
     }, [data, favourite]);
 
     const toggleFavourite = () => {
+        if (isButtonDisabled) return;
+
+        setIsButtonDisabled(true);
+        setTimeout(() => setIsButtonDisabled(false), 500);
+
         if (favouriteStatus) {
             setFavouriteStatus(false);
-            // удаление из избранного 
+            deleteWord({ wordId: favourite[0].id }).unwrap();
         } else {
-            const word = {
+            let word = {
                 part: data[0].pos,
                 translation: data[0].tr[0].text,
                 word: data[0].text
             }
+
+            if (!isEnglish(word.part[0])) {
+                word = {
+                    part: formatPartOfSpeech(data[0].pos),
+                    translation: data[0].text,
+                    word: data[0].tr[0].text
+                }
+            }
             setFavouriteStatus(true);
-            addWord({ word }).unwrap();;
+            addWord({ word }).unwrap();
         }
     }
 
@@ -82,8 +101,20 @@ const WordTranslate = () => {
             <div className="translate__title_section">
                 <h2>Словарь</h2>
                 <div className="tabs">
-                    <button onClick={toggleFavourite} className="tab"><img src={favouriteStatus ? heart : empty_heart} alt="favourite" /></button>
-                    <button className="tab"><img src={plus} alt="adding" /></button>
+                    <motion.button
+                        onClick={toggleFavourite}
+                        disabled={isButtonDisabled}
+                        className="tab"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}>
+                        <img src={favouriteStatus ? heart : empty_heart} alt="favourite" />
+                    </motion.button>
+                    <motion.button
+                        className="tab"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}>
+                        <img src={plus} alt="adding" />
+                    </motion.button>
                 </div>
             </div>
             <div className="translate__main_section">
