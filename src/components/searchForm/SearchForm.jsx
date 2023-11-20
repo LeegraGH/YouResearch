@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from "react-redux";
 
@@ -10,6 +10,7 @@ const SearchForm = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    let location = useLocation();
 
     const detectLanguage = (word) => {
         const enAlphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -36,13 +37,13 @@ const SearchForm = () => {
             onSubmit={(values, { setSubmitting }) => {
                 onSubmitWord(values.word);
                 setSubmitting(false);
-                navigate("/dictionary");
+                if (location.pathname === "/") navigate("/dictionary");
             }}>
             {({ dirty, isSubmitting }) => (
                 <Form className="search-word">
                     <div className="word__block">
                         <Field type="text" name="word" placeholder="Какое слово исследуем сегодня?" />
-                        <ErrorMessage name="word" component="div" className="word__block__error" />
+                        {location.pathname === "/" ? <ErrorMessage name="word" component="div" className="word__block__error" /> : null}
                     </div>
                     <button type="submit" disabled={!dirty || isSubmitting}>
                         Исследовать

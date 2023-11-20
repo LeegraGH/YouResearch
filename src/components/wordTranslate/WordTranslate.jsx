@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import CircularProgress from '@mui/material/CircularProgress';
 import { skipToken } from "@reduxjs/toolkit/query";
 
 import ErrorMessage from "../errorMessage/ErrorMessage";
+import Spinner from "../spinner/Spinner";
 import { useAddFavouriteWordMutation, useGetFavouriteWordQuery } from "../../redux/slices/apiSlice";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
@@ -45,7 +45,7 @@ const WordTranslate = () => {
                 word: data[0].text
             }
             setFavouriteStatus(true);
-            addWord({ word });
+            addWord({ word }).unwrap();;
         }
     }
 
@@ -101,7 +101,7 @@ const WordTranslate = () => {
                     return wordContent;
                 } else return <ErrorMessage>К сожалению, слово, которое вы ищите, не найдено</ErrorMessage>;
             case "loading":
-                return <CircularProgress color="inherit" />
+                return <Spinner />
             case "error":
                 return <ErrorMessage>Ошибка при поиске слова или фразы</ErrorMessage>;
             default:

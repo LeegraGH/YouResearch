@@ -12,15 +12,7 @@ header {
             justify-content: space-between;
             align-items: center;
             // padding-top: 30px;
-            gap: 10px;
-
-            .search-word {
-                width: 60%;
-
-                .word__block__error {
-                    display: none;
-                }
-            }
+            gap: 50px;
 
             .title {
                 color: #18333E;
@@ -33,6 +25,10 @@ header {
                 a {
                     width: inherit;
                 }
+            }
+
+            .search-word {
+                width: 65%;
             }
 
             .nav {

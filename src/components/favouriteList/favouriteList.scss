@@ -2,6 +2,7 @@
 
     &__block {
         width: 90%;
+        // min-height: 480px;
         padding: 65px 75px;
         margin: 0 auto;
 
@@ -19,8 +20,9 @@
 
     &__section {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-        column-gap: 50px;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 45%));
+        justify-content: center;
+        column-gap: 35px;
         row-gap: 25px;
         margin-top: 30px;
     }
