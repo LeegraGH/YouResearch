@@ -6,6 +6,7 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import { useGetFavouriteWordsQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
 import FlashCard from "../flashCard/FlashCard";
 import { FavouriteContext } from "../../contexts/Contexts";
+import { isEnglish } from "../../utils/Alphabet";
 
 import "./favouriteList.scss";
 
@@ -16,9 +17,10 @@ const FavoriteList = () => {
     const searchFavourite = useContext(FavouriteContext);
 
     const onLoadFavourites = (data) => {
-        return (searchFavourite === "" ? data : data.filter(({ word }) => word.includes(searchFavourite))).map(({ id, word, translation }) => {
-            return <FlashCard key={id} deleteFavourite={() => deleteWord({ wordId: id })} word={word} translation={translation} />
-        })
+        return (searchFavourite === "" ? data : data.filter(({ word, translation }) =>
+            isEnglish(searchFavourite) ? word.toLowerCase().includes(searchFavourite) : translation.toLowerCase().includes(searchFavourite))).map(({ id, word, translation }) => {
+                return <FlashCard key={id} deleteFavourite={() => deleteWord({ wordId: id })} word={word} translation={translation} />
+            })
     }
 
     const onLoadContent = (data) => {

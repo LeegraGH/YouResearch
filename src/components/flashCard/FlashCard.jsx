@@ -1,4 +1,3 @@
-// import { useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
 
 import heart from "../../resources/icons/heart.svg";
 
@@ -10,9 +9,9 @@ const FlashCard = ({ id, word, translation, deleteFavourite }) => {
         <div className="card">
             <div className="translate-word">
                 <div onClick={deleteFavourite} className="tab"><img src={heart} alt="favourite" /></div>
-                <div>{word}</div>
+                <div className="word">{word}</div>
             </div>
-            <div>{translation}</div>
+            <div className="translation">{translation}</div>
         </div>
     )
 }

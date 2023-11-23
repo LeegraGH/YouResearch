@@ -7,7 +7,7 @@ const FavouriteFilter = (props) => {
     const [favourite, setFavourite] = useState("");
 
     const onLoadFavourite = (e) => {
-        const word = e.target.value;
+        const word = (e.target.value).toLowerCase();
         setFavourite(word);
         props.onLoadFavourite(word);
     }

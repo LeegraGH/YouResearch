@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch } from "react-redux";
 
 import { fetchWord } from "../../redux/slices/wordSlice";
-import { detectLanguage } from "../utils/Alphabet";
+import { detectLanguage } from "../../utils/Alphabet";
 
 import "./searchForm.scss";
 

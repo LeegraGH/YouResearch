@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Container } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+
+import LogoutModal from '../logoutModal/LogoutModal';
 
 import home from "../../resources/icons/home.svg";
 import profile from "../../resources/icons/profile.svg";
@@ -8,9 +11,15 @@ import collections from "../../resources/icons/collections.svg";
 import heart from "../../resources/icons/heart.svg";
 import moon from "../../resources/icons/moon.svg";
 import logout from "../../resources/icons/logout.svg";
+
 import "./main.scss";
 
 const Main = ({ Compoment }) => {
+    const [showedLogout, setShowedLogout] = useState(false);
+
+    const toggledLogoutModal = () => {
+        setShowedLogout(showedLogout => !showedLogout);
+    }
 
     return (
         <div className="main__info">
@@ -23,8 +32,14 @@ const Main = ({ Compoment }) => {
                             <NavigationItem to="/favourite" src={heart} name="Избранное" color="#F973AB" />
                             <NavigationItem to="/collections" src={collections} name="Коллекции" color="#a68beb" />
                             <NavigationItem to="/profile" src={profile} name="Профиль" color="#7eaceb" />
-                            <NavigationItem to="/theme" src={moon} name="Цвет темы" />
-                            <NavigationItem to="/logout" src={logout} name="Выйти" />
+                            <li className="nav__link">
+                                <span className="wrap__img"><img src={moon} alt="Цвет темы" /></span>
+                                Цвет темы
+                            </li>
+                            <li className="nav__link" onClick={toggledLogoutModal}>
+                                <span className="wrap__img"><img src={logout} alt="Выйти" /></span>
+                                Выйти
+                            </li>
                         </ul>
                     </aside>
                     <main>
@@ -32,6 +47,7 @@ const Main = ({ Compoment }) => {
                         <div className="rectangle-pink"></div>
                         <div className="rectangle-mint"></div>
                         <Compoment />
+                        {showedLogout ? <LogoutModal /> : null}
                     </main>
                 </div>
             </Container>

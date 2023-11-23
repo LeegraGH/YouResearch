@@ -6,7 +6,14 @@ const part = {
     "прич": "participle",
     "дееприч": "participle",
     "межд": "interjection",
-    "числ": "numeral"
+    "числ": "numeral",
+    "неизм": "invariable",
+    "мест": "pronoun",
+    "част": "particle",
+    "союз": "conjunction",
+    "предик": "predicative",
+    "предл": "preposition",
+    "часть": "part",
 };
 
 export const formatPartOfSpeech = (data) => {

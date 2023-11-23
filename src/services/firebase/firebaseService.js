@@ -1,5 +1,5 @@
 import { collection, getDocs, addDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
-
+import { isEnglish } from "../../utils/Alphabet";
 import { db, storage } from './firebaseConfig';
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
@@ -23,7 +23,8 @@ export async function getFavouriteWords(userId = "r49nhVOZMrVizkRbcnJ1") {
 };
 
 export async function getFavouriteWord({ userId = "r49nhVOZMrVizkRbcnJ1", word }) {
-    const col = query(collection(db, "users", userId, "favourites"), where("word", "==", word.word), where("part", "==", word.part));
+    const what = isEnglish(word) ? "word" : "translation";
+    const col = query(collection(db, "users", userId, "favourites"), where(what, "==", word));
     const docSnapshot = await getDocs(col);
 
     const res = docSnapshot.docs.map(doc => {

@@ -1,14 +1,14 @@
 import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { motion } from "framer-motion";
 
-import { formatPartOfSpeech } from "../utils/PartsOfSpeech";
+import { formatPartOfSpeech } from "../../utils/PartsOfSpeech";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import Spinner from "../spinner/Spinner";
 import { useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
-import { isEnglish } from "../utils/Alphabet";
+import { isEnglish } from "../../utils/Alphabet";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
 import heart from "../../resources/icons/heart.svg";
@@ -18,54 +18,95 @@ import "./wordTranslate.scss";
 const WordTranslate = () => {
 
     const [favouriteStatus, setFavouriteStatus] = useState(false);
+    const [parts, setParts] = useState([]);
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const { data, status } = useSelector(state => state.word);
 
+    const modalRef = useRef(null);
+
+    const query = (status === "idle" && data !== null && data.length > 0) ? { word: data[0].text } : skipToken;
+
+    const { data: favourite = [] } = useGetFavouriteWordQuery(query);
     const [addWord] = useAddFavouriteWordMutation();
     const [deleteWord] = useDeleteFavouriteWordMutation();
 
-    const query = (status === "idle" && data !== null && data.length > 0) ? { word: isEnglish(data[0].text) ? { word: data[0].text, part: data[0].pos } : { word: data[0].tr[0].text, part: formatPartOfSpeech(data[0].pos) } } : skipToken;
-
-    const { data: favourite } = useGetFavouriteWordQuery(query);
+    useEffect(() => {
+        if (favourite.length > 0) {
+            setFavouriteStatus(true);
+        } else setFavouriteStatus(false);
+    }, [favourite]);
 
     useEffect(() => {
-        if (status === "idle" && data !== null) {
-            if (favourite?.length > 0) {
-                setFavouriteStatus(true);
-            } else {
-                setFavouriteStatus(false);
+        if (data !== null && data.length > 0) {
+            const partsList = [];
+            data.forEach(word => partsList.push(word.pos));
+            setParts(partsList);
+        }
+    }, [data])
+
+    const toggleChosenPart = (index, chosenWord, formatPart) => {
+        for (let i = 0; i < parts.length; i++) {
+            if (index === i) {
+                console.log(parts[i])
+                if (!chosenWord.length > 0) {
+                    let word = {
+                        part: parts[i],
+                        translation: data[i].tr[0].text,
+                        word: data[i].text
+                    }
+
+                    if (!isEnglish(word.part[0])) {
+                        word = {
+                            part: formatPart,
+                            translation: data[i].text,
+                            word: data[i].tr[0].text
+                        }
+                    }
+                    addWord({ word }).unwrap();
+                } else {
+                    deleteWord({ wordId: chosenWord[0].id }).unwrap();
+                }
+                break;
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, favourite]);
+    }
 
     const toggleFavourite = () => {
         if (isButtonDisabled) return;
 
-        setIsButtonDisabled(true);
-        setTimeout(() => setIsButtonDisabled(false), 500);
-
-        if (favouriteStatus) {
-            setFavouriteStatus(false);
-            deleteWord({ wordId: favourite[0].id }).unwrap();
+        if (data.length > 1) {
+            const modalStyle = modalRef.current.style.display;
+            modalRef.current.style.display = modalStyle !== "block" ? "block" : "none";
         } else {
-            let word = {
-                part: data[0].pos,
-                translation: data[0].tr[0].text,
-                word: data[0].text
-            }
+            setIsButtonDisabled(true);
+            setTimeout(() => setIsButtonDisabled(false), 500);
 
-            if (!isEnglish(word.part[0])) {
-                word = {
-                    part: formatPartOfSpeech(data[0].pos),
-                    translation: data[0].text,
-                    word: data[0].tr[0].text
+            if (favouriteStatus) {
+                setFavouriteStatus(false);
+                deleteWord({ wordId: favourite[0].id }).unwrap();
+            } else {
+                setFavouriteStatus(true);
+                let word = {
+                    part: data[0].pos,
+                    translation: data[0].tr[0].text,
+                    word: data[0].text
                 }
+                if (!isEnglish(word.part[0])) {
+                    word = {
+                        part: formatPartOfSpeech(data[0].pos),
+                        translation: data[0].text,
+                        word: data[0].tr[0].text
+                    }
+                }
+                addWord({ word }).unwrap();
+
             }
-            setFavouriteStatus(true);
-            addWord({ word }).unwrap();
         }
+    }
+
+    const onHideModal = () => {
+        modalRef.current.style.display = "none";
     }
 
     const onLoadSkeletonBlock = useMemo(() => {
@@ -97,12 +138,33 @@ const WordTranslate = () => {
             return <WordTranslateBlock data={word} key={i} />
         })
 
+        const partsFavouriteWord = parts.map((part, i) => {
+            const formatPart = isEnglish(part) ? part : formatPartOfSpeech(part);
+            console.log(formatPart)
+            const isChosenWord = favourite.filter(word => word.part === formatPart);
+
+            return <li
+                key={i}
+                onClick={() => toggleChosenPart(i, isChosenWord, formatPart)}
+                className="part">
+                {part}
+                {isChosenWord.length > 0 ? " ✅" : " ❌"}
+            </li>
+        })
+
         return (<>
             <div className="translate__title_section">
                 <h2>Словарь</h2>
                 <div className="tabs">
+                    <div className="variant-part_modal" ref={modalRef}>
+                        <h5>Выберите, слово какой части речи вы хотите добавить в избранное:</h5>
+                        <ul className="part__list">
+                            {partsFavouriteWord}
+                        </ul>
+                    </div>
                     <motion.button
                         onClick={toggleFavourite}
+                        // onBlur={onHideModal}
                         disabled={isButtonDisabled}
                         className="tab"
                         whileHover={{ scale: 1.1 }}
