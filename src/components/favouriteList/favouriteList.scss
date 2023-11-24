@@ -19,11 +19,25 @@
     }
 
     &__section {
+        padding: 10px;
+        max-height: 545px;
+        overflow-y: auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
         justify-content: space-between;
         column-gap: 35px;
         row-gap: 25px;
         margin-top: 30px;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+            border-radius: 50px;
+            background: #DBE7EA;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 50px;
+            background: #E96CA1;
+        }
     }
 }

@@ -31,7 +31,7 @@ const FavoriteList = () => {
                     <div className="favourite__section">
                         {words}
                     </div> :
-                    <ErrorMessage>Не найдено ни одного слова...</ErrorMessage>;
+                    <ErrorMessage>Ни одного слова не найдено...</ErrorMessage>;
             } else return <ErrorMessage>В Вашем Избранном пока что пусто...</ErrorMessage>;
         } else if (isLoading || isFetching) {
             return <Spinner />;

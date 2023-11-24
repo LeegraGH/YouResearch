@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./favouriteFilter.scss";
 
 const FavouriteFilter = (props) => {
 
     const [favourite, setFavourite] = useState("");
+
+    useEffect(() => {
+        props.onLoadFavourite("");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const onLoadFavourite = (e) => {
         const word = (e.target.value).toLowerCase();
