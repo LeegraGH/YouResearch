@@ -1,4 +1,4 @@
-const enAlphabet = "abcdefghijklmnopqrstuvwxyz";
+const enAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 export const detectLanguage = (word) => {
     if (enAlphabet.includes(word[0])) {

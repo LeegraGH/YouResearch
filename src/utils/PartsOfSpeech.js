@@ -14,6 +14,7 @@ const part = {
     "предик": "predicative",
     "предл": "preposition",
     "часть": "part",
+    // "": "foreign word"
 };
 
 export const formatPartOfSpeech = (data) => {

@@ -24,7 +24,7 @@ export async function getFavouriteWords(userId = "r49nhVOZMrVizkRbcnJ1") {
 
 export async function getFavouriteWord({ userId = "r49nhVOZMrVizkRbcnJ1", word }) {
     const what = isEnglish(word) ? "word" : "translation";
-    const col = query(collection(db, "users", userId, "favourites"), where(what, "==", word));
+    const col = query(collection(db, "users", userId, "favourites"), where(what, 'in', [word.toLowerCase(), word.toUpperCase(), word[0].toUpperCase() + word.slice(1)]));
     const docSnapshot = await getDocs(col);
 
     const res = docSnapshot.docs.map(doc => {
