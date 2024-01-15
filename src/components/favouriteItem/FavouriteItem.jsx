@@ -1,9 +1,9 @@
 
 import heart from "../../resources/icons/heart.svg";
 
-import "./flashCard.scss";
+import "./favouriteItem.scss";
 
-const FlashCard = ({ id, word, translation, deleteFavourite }) => {
+const FavouriteItem = ({ id, word, translation, deleteFavourite }) => {
 
     return (
         <div className="card">
@@ -16,4 +16,4 @@ const FlashCard = ({ id, word, translation, deleteFavourite }) => {
     )
 }
 
-export default FlashCard;
+export default FavouriteItem;

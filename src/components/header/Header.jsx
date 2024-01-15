@@ -4,17 +4,16 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 import SearchForm from '../searchForm/SearchForm';
-import FavouriteFilter from '../favouriteFilter/FavouriteFilter';
+import SearchFilter from '../searchFilter/SearchFilter';
 
 import collection from "../../resources/icons/collection.svg";
 import heart from "../../resources/icons/heart.svg";
 import moon from "../../resources/icons/moon.svg";
-import search from "../../resources/icons/search.svg";
 import profile from "../../resources/icons/profile.svg";
 
 import "./header.scss";
 
-const Header = ({ onLoadFavourite }) => {
+const Header = ({ onLoadFavourite, onLoadCollection }) => {
     let location = useLocation();
 
     const [searchTab, setSearchTab] = useState(false);
@@ -24,24 +23,13 @@ const Header = ({ onLoadFavourite }) => {
         else setSearchTab(false);
     }, [location])
 
-    const onLoadSearchBlock = () => {
-        setSearchTab(searchTab => !searchTab);
-    }
-
     return (
         <header>
-            <Container maxWidth="xl">
+            <Container maxWidth="false">
                 <div className="header__nav">
-                    <div className="title"><Link to="/">Word Anixx</Link></div>
-                    {searchTab ? (location.pathname === "/favourite" ? <FavouriteFilter onLoadFavourite={onLoadFavourite} /> : <SearchForm />) : null}
+                    <div className="title"><Link to="/">YouResearch</Link></div>
+                    {searchTab ? (location.pathname === "/favourite" ? <SearchFilter onLoadFilter={onLoadFavourite} placeholderName="Поиск по избранным словам" /> : (location.pathname === "/collections" ? <SearchFilter onLoadFilter={onLoadCollection} placeholderName="Поиск по коллекциям" /> : <SearchForm />)) : null}
                     <ul className='nav__list'>
-                        {(location.pathname !== "/" && location.pathname !== "/favourite") ?
-                            <motion.li
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}><div onClick={onLoadSearchBlock} className='nav__tab'><img src={search} alt="search word" /></div>
-                            </motion.li>
-                            : null
-                        }
                         <motion.li
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}>
@@ -63,7 +51,6 @@ const Header = ({ onLoadFavourite }) => {
                             <Link className='nav__tab' to="/"><img src={profile} alt="profile" /></Link>
                         </motion.li>
                     </ul>
-
                 </div>
             </Container>
         </header>

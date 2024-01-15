@@ -3,7 +3,7 @@ import WordTranslate from "../wordTranslate/WordTranslate";
 
 const DictionaryPage = () => {
     return (
-        <Main Compoment={WordTranslate} />
+        <Main Component={WordTranslate} />
     )
 }
 

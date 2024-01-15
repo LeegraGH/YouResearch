@@ -1,16 +1,15 @@
-
 import { useContext } from "react";
 
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import { useGetFavouriteWordsQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
-import FlashCard from "../flashCard/FlashCard";
+import FavouriteItem from "../favouriteItem/FavouriteItem";
 import { FavouriteContext } from "../../contexts/Contexts";
 import { isEnglish } from "../../utils/Alphabet";
 
 import "./favouriteList.scss";
 
-const FavoriteList = () => {
+const FavouriteList = () => {
 
     const { data = [], isSuccess, isLoading, isFetching } = useGetFavouriteWordsQuery();
     const [deleteWord] = useDeleteFavouriteWordMutation();
@@ -19,7 +18,7 @@ const FavoriteList = () => {
     const onLoadFavourites = (data) => {
         return (searchFavourite === "" ? data : data.filter(({ word, translation }) =>
             isEnglish(searchFavourite) ? word.toLowerCase().includes(searchFavourite) : translation.toLowerCase().includes(searchFavourite))).map(({ id, word, translation }) => {
-                return <FlashCard key={id} deleteFavourite={() => deleteWord({ wordId: id })} word={word} translation={translation} />
+                return <FavouriteItem key={id} deleteFavourite={() => deleteWord({ wordId: id })} word={word} translation={translation} />
             })
     }
 
@@ -48,4 +47,4 @@ const FavoriteList = () => {
     )
 }
 
-export default FavoriteList;
+export default FavouriteList;

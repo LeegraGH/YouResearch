@@ -5,9 +5,9 @@ import { db, storage } from './firebaseConfig';
 // import { } from 'firebase/<service>';
 
 
-export async function getFavouriteWords(userId = "r49nhVOZMrVizkRbcnJ1") {
+export async function getContent(type, userId = "r49nhVOZMrVizkRbcnJ1") {
 
-    const col = query(collection(db, "users", userId, "favourites"));
+    const col = query(collection(db, "users", userId, type));
     const docSnapshot = await getDocs(col);
 
     const res = docSnapshot.docs.map(doc => {

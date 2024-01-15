@@ -1,5 +1,3 @@
-@import "../../styles/variables.scss";
-
 .error {
 
     &__block {
@@ -12,7 +10,6 @@
     }
 
     &__message {
-        color: $main-color;
         font-size: 22px;
         font-weight: 400;
         margin-bottom: 60px;

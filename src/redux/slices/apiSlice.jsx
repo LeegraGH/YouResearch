@@ -1,15 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { addFavouriteWord, getFavouriteWords, getFavouriteWord, deleteFavouriteWord } from "../../services/firebase/firebaseService";
+import { addFavouriteWord, getContent, getFavouriteWord, deleteFavouriteWord } from "../../services/firebase/firebaseService";
 
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "/" }),
-    tagTypes: ['Users', 'Favourite'],
+    tagTypes: ['Users', 'Favourite', 'Collections'],
     endpoints: (builder) => ({
+        // favourite
         getFavouriteWords: builder.query({
             queryFn: async (user) => {
-                const data = await getFavouriteWords();
+                const data = await getContent("favourites");
                 return { data };
             },
             providesTags: ['Favourite']
@@ -33,7 +34,16 @@ export const apiSlice = createApi({
             },
             invalidatesTags: ['Favourite']
         }),
+
+        // collections
+        getCollections: builder.query({
+            queryFn: async (user) => {
+                const data = await getContent("collections");
+                return { data };
+            },
+            providesTags: ['Collections']
+        }),
     })
 })
 
-export const { useGetFavouriteWordsQuery, useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation } = apiSlice;
+export const { useGetFavouriteWordsQuery, useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation, useGetCollectionsQuery } = apiSlice;

@@ -1,12 +1,17 @@
 import { Container } from '@mui/material';
+import { Link } from 'react-router-dom';
+import React from 'react';
 
 import mailIcon from "../../resources/icons/mail.svg";
 import "./footer.scss";
 
-const Footer = () => {
+const Footer = React.memo(() => {
+
+    let dateYear = new Date().getFullYear();
+
     return (
         <footer>
-            <Container maxWidth="xl">
+            <Container maxWidth="false">
                 <div className="footer__nav">
                     <div className="contacts">
                         <h3 className="footer__article">Контакты</h3>
@@ -19,22 +24,22 @@ const Footer = () => {
                     <div className="menu">
                         <h3 className="footer__article">Меню</h3>
                         <ul className="menu__list">
-                            <li><a href="">Главная</a></li>
-                            <li><a href="">Словарь</a></li>
-                            <li><a href="">Избранное</a></li>
-                            <li><a href="">Коллекции</a></li>
-                            <li><a href="">Профиль</a></li>
+                            <li><Link to={"/"}>Главная</Link></li>
+                            <li><Link to={"/dictionary"}>Словарь</Link></li>
+                            <li><Link to={"/favourite"}>Избранное</Link></li>
+                            <li><Link to={"/collections"}>Коллекции</Link></li>
+                            <li><Link to={"/profile"}>Профиль</Link></li>
                         </ul>
                     </div>
 
                     <div className="rights">
-                        <div>Anixx © 2023. All Rights Reserved.</div>
+                        <div>YouResearch © {dateYear}. Все права защищены.</div>
                         <div><a href="">Политика конфиденциальности</a></div>
                     </div>
                 </div>
             </Container>
         </footer>
     )
-}
+})
 
 export default Footer;

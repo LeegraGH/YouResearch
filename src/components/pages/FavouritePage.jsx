@@ -1,9 +1,9 @@
 import Main from "../main/Main";
-import FavoriteList from "../favouriteList/FavouriteList";
+import FavouriteList from "../favouriteList/FavouriteList";
 
 const FavouritePage = () => {
     return (
-        <Main Compoment={FavoriteList} />
+        <Main Component={FavouriteList} />
     )
 }
 

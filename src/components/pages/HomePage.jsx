@@ -3,7 +3,7 @@ import SearchPanel from "../searchPanel/SearchPanel";
 
 const HomePage = () => {
     return (
-        <Main Compoment={SearchPanel} />
+        <Main Component={SearchPanel} />
     )
 }
 

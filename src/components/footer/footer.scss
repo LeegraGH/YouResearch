@@ -36,19 +36,24 @@ footer {
                     gap: 25px;
                     flex-wrap: nowrap;
 
-                    color: rgba(255, 255, 255, 0.54);
-                    font-size: 14px;
-                    font-weight: 300;
+                    li a {
+                        font-size: 14px;
+                        font-weight: 300;
+                        color: rgba(255, 255, 255, 0.54);
+                    }
                 }
             }
 
             .rights {
-                color: rgba(255, 255, 255, 0.54);
-                font-size: 14px;
-                font-weight: 300;
-                text-align: right;
 
-                & div:first-child {
+                div {
+                    color: rgba(255, 255, 255, 0.54);
+                    font-size: 14px;
+                    font-weight: 300;
+                    text-align: right;
+                }
+
+                div:first-child {
                     margin-bottom: 8px;
                 }
             }

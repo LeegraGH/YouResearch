@@ -95,4 +95,12 @@
             height: 250px;
         }
     }
+
+    .active-overflow {
+        overflow-x: auto;
+    }
+
+    .no_padding-right {
+        padding-right: 0px;
+    }
 }

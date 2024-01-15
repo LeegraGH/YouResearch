@@ -1,0 +1,60 @@
+@import '../../styles/variables.scss';
+
+.collection {
+    width: 100%;
+
+    &__section {
+        min-height: 250px;
+        margin-bottom: 30px;
+
+
+        .title {
+            color: $main-color;
+            font-size: 30px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 25px;
+        }
+    }
+
+    &__section:last-child {
+        margin-bottom: 0px;
+    }
+
+    &__block {
+        display: flex;
+        flex-direction: row;
+        gap: 35px;
+        padding-bottom: 20px;
+        padding-right: 24px;
+
+        // width: 100%;
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+            height: 5px;
+            border-radius: 50px;
+            background: #DBE7EA;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 50px;
+            background: $yellow-color;
+        }
+    }
+
+    &__message {
+        text-align: center;
+        margin: 96px 0;
+        font-size: 22px;
+        font-weight: 400;
+    }
+
+    &__grid {
+        display: grid;
+        gap: 35px;
+        padding-right: 24px;
+        grid-template-columns: repeat(auto-fill, minmax(243px, 243px));
+    }
+}

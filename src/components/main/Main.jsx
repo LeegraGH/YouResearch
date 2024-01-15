@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Container } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import LogoutModal from '../logoutModal/LogoutModal';
 
@@ -14,24 +15,32 @@ import logout from "../../resources/icons/logout.svg";
 
 import "./main.scss";
 
-const Main = ({ Compoment }) => {
+const Main = ({ Component }) => {
+
+    let location = useLocation();
+    let locationPath = location.pathname;
+
     const [showedLogout, setShowedLogout] = useState(false);
 
     const toggledLogoutModal = () => {
         setShowedLogout(showedLogout => !showedLogout);
     }
 
+    const hideLogoutModal = () => {
+        setShowedLogout(false);
+    }
+
     return (
         <div className="main__info">
-            <Container maxWidth="xl">
+            <Container maxWidth="false" className={locationPath !== "/collections" ? null : "no_padding-right"}>
                 <div className="grid__content">
                     <aside className="sidebar">
                         <ul className="nav__list">
                             <NavigationItem to="/" src={home} name="Главная" color="#FDDC63" />
                             <NavigationItem to="/dictionary" src={dictionary} name="Словарь" color="#6BDDC8" />
                             <NavigationItem to="/favourite" src={heart} name="Избранное" color="#F973AB" />
-                            <NavigationItem to="/collections" src={collections} name="Коллекции" color="#a68beb" />
-                            <NavigationItem to="/profile" src={profile} name="Профиль" color="#7eaceb" />
+                            <NavigationItem to="/collections" src={collections} name="Коллекции" color="#FDDC63" />
+                            <NavigationItem to="/profile" src={profile} name="Профиль" color="#6BDDC8" />
                             <li className="nav__link">
                                 <span className="wrap__img"><img src={moon} alt="Цвет темы" /></span>
                                 Цвет темы
@@ -42,16 +51,21 @@ const Main = ({ Compoment }) => {
                             </li>
                         </ul>
                     </aside>
-                    <main>
-                        <div className="rectangle-yellow"></div>
-                        <div className="rectangle-pink"></div>
-                        <div className="rectangle-mint"></div>
-                        <Compoment />
-                        {showedLogout ? <LogoutModal /> : null}
+                    <main className={locationPath !== "/collections" ? null : "active-overflow"}>
+                        {locationPath !== "/collections" ?
+                            <>
+                                <div className="rectangle-yellow"></div>
+                                <div className="rectangle-pink"></div>
+                                <div className="rectangle-mint"></div>
+                            </>
+                            : null
+                        }
+                        <Component />
+                        {showedLogout ? createPortal(<LogoutModal hideLogoutModal={hideLogoutModal} />, document.body) : null}
                     </main>
                 </div>
-            </Container>
-        </div>
+            </Container >
+        </div >
     )
 }
 

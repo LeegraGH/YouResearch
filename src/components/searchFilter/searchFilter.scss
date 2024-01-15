@@ -1,4 +1,6 @@
-.search-favourite {
+@import '../../styles/variables.scss';
+
+.search-filter {
     width: 45%;
 
 
@@ -10,7 +12,6 @@
         border-radius: 12px;
         width: 100%;
 
-
         color: #738C96;
         font-size: 14px;
         font-weight: 400;
@@ -20,4 +21,19 @@
             outline: none;
         }
     }
+}
+
+button.btn-collection {
+    width: 15%;
+    height: 53px;
+    border: none;
+    padding: 15px;
+    border-radius: 16px;
+    background: $yellow-color;
+    cursor: pointer;
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 }

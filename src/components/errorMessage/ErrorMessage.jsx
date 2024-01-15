@@ -1,8 +1,10 @@
-import errorImage from "../../resources/img/search-error.svg";
 
 import "./errorMessage.scss";
 
+import errorImage from "../../resources/img/search-error.svg";
+
 const ErrorMessage = ({ children }) => {
+
     return (
         <div className="error__block">
             <img src={errorImage} alt="error" />
