@@ -1,0 +1,94 @@
+@import "../../styles/variables.scss";
+
+.collection__modal {
+
+    position: absolute;
+    top: 65px;
+    right: 0;
+    z-index: 1;
+
+
+    width: 200%;
+    max-width: 415px;
+    min-height: 215px;
+    padding: 15px 15px 35px 35px;
+    border-radius: 20px;
+    background: #FFF;
+    box-shadow: 0px 2px 13.1px 0px rgba(0, 0, 0, 0.12);
+
+    .close {
+        text-align: right;
+        margin-bottom: 10px;
+
+        i {
+            color: $main-color;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .create__block {
+        width: 90%;
+
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        justify-content: space-around;
+        align-items: center;
+
+        .title_input {
+            width: 100%;
+            text-align: center;
+
+            input {
+                background: url("../../resources/icons/search-main.svg") left 15px center no-repeat #E9F1FA;
+                border: none;
+                padding: 15px;
+                padding-left: 45px;
+                border-radius: 12px;
+                width: 100%;
+
+                color: #738C96;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: normal;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        .public_input {
+            width: 100%;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            label {
+                color: $main-color;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+            }
+        }
+
+        .btn {
+            width: 100%;
+            border-radius: 12px;
+            background: $yellow-color;
+            border: none;
+            padding: 15px;
+
+            color: $main-color;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+
+            cursor: pointer;
+        }
+    }
+}

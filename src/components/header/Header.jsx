@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+import CollectionModal from '../collectionModal/CollectionModal';
 import SearchForm from '../searchForm/SearchForm';
 import SearchFilter from '../searchFilter/SearchFilter';
 
@@ -17,6 +18,15 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
     let location = useLocation();
 
     const [searchTab, setSearchTab] = useState(false);
+    const [collectionModal, setCollectionModal] = useState(false);
+
+    const toggleCollectionModal = () => {
+        setCollectionModal(collectionModal => !collectionModal);
+    }
+
+    const hideCollectionModal = () => {
+        setCollectionModal(false);
+    }
 
     useEffect(() => {
         if (location.pathname !== "/") setSearchTab(true);
@@ -28,7 +38,23 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
             <Container maxWidth="false">
                 <div className="header__nav">
                     <div className="title"><Link to="/">YouResearch</Link></div>
-                    {searchTab ? (location.pathname === "/favourite" ? <SearchFilter onLoadFilter={onLoadFavourite} placeholderName="Поиск по избранным словам" /> : (location.pathname === "/collections" ? <SearchFilter onLoadFilter={onLoadCollection} placeholderName="Поиск по коллекциям" /> : <SearchForm />)) : null}
+                    {searchTab
+                        ? (location.pathname === "/favourite"
+                            ? <SearchFilter onLoadFilter={onLoadFavourite} placeholderName="Поиск по избранным словам" />
+                            : (location.pathname === "/collections"
+                                ? <>
+                                    <SearchFilter onLoadFilter={onLoadCollection} placeholderName="Поиск по коллекциям" />
+                                    <div className="create_collection">
+                                        <button className="btn-collection" onClick={toggleCollectionModal}>
+                                            Создать коллекцию
+                                        </button>
+                                        {collectionModal
+                                            ? <CollectionModal hideModal={hideCollectionModal} />
+                                            : null}
+                                    </div>
+                                </>
+                                : <SearchForm />))
+                        : null}
                     <ul className='nav__list'>
                         <motion.li
                             whileHover={{ scale: 1.1 }}

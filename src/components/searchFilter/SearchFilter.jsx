@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
 
 import "./searchFilter.scss";
 
 const SearchFilter = (props) => {
-
-    let location = useLocation();
 
     const [word, setWord] = useState("");
 
@@ -21,18 +18,9 @@ const SearchFilter = (props) => {
     }
 
     return (
-        <>
-            <div className="search-filter">
-                <input onChange={onLoadFilter} value={word} type="text" placeholder={props.placeholderName} />
-            </div>
-            {
-                location.pathname === "/collections" ?
-                    <button className="btn-collection">
-                        Создать коллекцию
-                    </button>
-                    : null
-            }
-        </>
+        <div className="search-filter">
+            <input onChange={onLoadFilter} value={word} type="text" placeholder={props.placeholderName} />
+        </div>
     )
 }
 

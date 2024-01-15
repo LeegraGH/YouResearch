@@ -14,6 +14,27 @@ header {
             // padding-top: 30px;
             gap: 50px;
 
+            .create_collection {
+                position: relative;
+                width: 15%;
+                max-width: 250px;
+
+                button.btn-collection {
+                    width: 100%;
+                    height: 53px;
+                    border: none;
+                    padding: 15px;
+                    border-radius: 16px;
+                    background: $yellow-color;
+                    cursor: pointer;
+
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                }
+            }
+
             .title {
                 color: #18333E;
                 font-size: 22px;
