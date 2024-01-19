@@ -2,14 +2,15 @@ import { Container } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { createPortal } from 'react-dom';
 
 import CollectionModal from '../collectionModal/CollectionModal';
 import SearchForm from '../searchForm/SearchForm';
 import SearchFilter from '../searchFilter/SearchFilter';
+import { useModal } from '../../hooks/modal.hook';
 
 import collection from "../../resources/icons/collection.svg";
 import heart from "../../resources/icons/heart.svg";
-import moon from "../../resources/icons/moon.svg";
 import profile from "../../resources/icons/profile.svg";
 
 import "./header.scss";
@@ -18,15 +19,8 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
     let location = useLocation();
 
     const [searchTab, setSearchTab] = useState(false);
-    const [collectionModal, setCollectionModal] = useState(false);
 
-    const toggleCollectionModal = () => {
-        setCollectionModal(collectionModal => !collectionModal);
-    }
-
-    const hideCollectionModal = () => {
-        setCollectionModal(false);
-    }
+    const { modal, closeModal, checkCloseModal, toggleModal } = useModal();
 
     useEffect(() => {
         if (location.pathname !== "/") setSearchTab(true);
@@ -45,11 +39,11 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
                                 ? <>
                                     <SearchFilter onLoadFilter={onLoadCollection} placeholderName="Поиск по коллекциям" />
                                     <div className="create_collection">
-                                        <button className="btn-collection" onClick={toggleCollectionModal}>
+                                        <button className="btn-collection" onClick={toggleModal}>
                                             Создать коллекцию
                                         </button>
-                                        {collectionModal
-                                            ? <CollectionModal hideModal={hideCollectionModal} />
+                                        {modal
+                                            ? createPortal(<CollectionModal hideModal={closeModal} checkCloseModal={checkCloseModal} />, document.body)
                                             : null}
                                     </div>
                                 </>
@@ -65,11 +59,6 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}>
                             <Link className='nav__tab' to="/"><img src={collection} alt="collection" /></Link>
-                        </motion.li>
-                        <motion.li
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}>
-                            <Link className='nav__tab' to="/"><img src={moon} alt="theme" /></Link>
                         </motion.li>
                         <motion.li
                             whileHover={{ scale: 1.1 }}

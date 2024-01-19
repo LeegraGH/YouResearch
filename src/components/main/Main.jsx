@@ -1,16 +1,15 @@
-import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Container } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import LogoutModal from '../logoutModal/LogoutModal';
+import { useModal } from '../../hooks/modal.hook';
 
 import home from "../../resources/icons/home.svg";
 import profile from "../../resources/icons/profile.svg";
 import dictionary from "../../resources/icons/note.svg";
 import collections from "../../resources/icons/collections.svg";
 import heart from "../../resources/icons/heart.svg";
-import moon from "../../resources/icons/moon.svg";
 import logout from "../../resources/icons/logout.svg";
 
 import "./main.scss";
@@ -20,15 +19,7 @@ const Main = ({ Component }) => {
     let location = useLocation();
     let locationPath = location.pathname;
 
-    const [showedLogout, setShowedLogout] = useState(false);
-
-    const toggledLogoutModal = () => {
-        setShowedLogout(showedLogout => !showedLogout);
-    }
-
-    const hideLogoutModal = () => {
-        setShowedLogout(false);
-    }
+    const { modal, closeModal, showModal, checkCloseModal } = useModal();
 
     return (
         <div className="main__info">
@@ -41,11 +32,7 @@ const Main = ({ Component }) => {
                             <NavigationItem to="/favourite" src={heart} name="Избранное" color="#F973AB" />
                             <NavigationItem to="/collections" src={collections} name="Коллекции" color="#FDDC63" />
                             <NavigationItem to="/profile" src={profile} name="Профиль" color="#6BDDC8" />
-                            <li className="nav__link">
-                                <span className="wrap__img"><img src={moon} alt="Цвет темы" /></span>
-                                Цвет темы
-                            </li>
-                            <li className="nav__link" onClick={toggledLogoutModal}>
+                            <li className="nav__link" onClick={showModal}>
                                 <span className="wrap__img"><img src={logout} alt="Выйти" /></span>
                                 Выйти
                             </li>
@@ -61,7 +48,7 @@ const Main = ({ Component }) => {
                             : null
                         }
                         <Component />
-                        {showedLogout ? createPortal(<LogoutModal hideLogoutModal={hideLogoutModal} />, document.body) : null}
+                        {modal ? createPortal(<LogoutModal hideLogoutModal={closeModal} checkCloseLogoutModal={checkCloseModal} />, document.body) : null}
                     </main>
                 </div>
             </Container >

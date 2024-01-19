@@ -33,8 +33,8 @@ const Footer = React.memo(() => {
                     </div>
 
                     <div className="rights">
+                        <div><a href="https://tech.yandex.ru/dictionary">Реализовано с помощью сервиса «Яндекс.Словарь»</a></div>
                         <div>YouResearch © {dateYear}. Все права защищены.</div>
-                        <div><a href="">Политика конфиденциальности</a></div>
                     </div>
                 </div>
             </Container>
