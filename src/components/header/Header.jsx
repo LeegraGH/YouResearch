@@ -2,7 +2,6 @@ import { Container } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { createPortal } from 'react-dom';
 
 import CollectionModal from '../collectionModal/CollectionModal';
 import SearchForm from '../searchForm/SearchForm';
@@ -44,7 +43,7 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
                                             Создать коллекцию
                                         </button>
                                         {modal
-                                            ? createPortal(<CollectionModal hideModal={closeModal} />, document.querySelector(".create_collection"))
+                                            ? <CollectionModal hideModal={closeModal} />
                                             : null}
                                     </div>
                                 </>

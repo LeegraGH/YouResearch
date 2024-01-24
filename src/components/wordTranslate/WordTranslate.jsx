@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Skeleton } from "@mui/material";
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,8 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import Spinner from "../spinner/Spinner";
 import { useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
 import { isEnglish } from "../../utils/Alphabet";
+import { useModal } from '../../hooks/modal.hook';
+import FavouriteModal from "../favouriteModal/FavouriteModal";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
 import heart from "../../resources/icons/heart.svg";
@@ -26,7 +28,7 @@ const WordTranslate = () => {
 
 	const { data, status } = useSelector(state => state.word);
 
-	const modalRef = useRef(null);
+	const { modal, closeModal, showModal } = useModal();
 
 	const query = (status === "idle" && data !== null && data.length > 0) ? { word: data[0].text } : skipToken;
 
@@ -79,8 +81,7 @@ const WordTranslate = () => {
 		if (isButtonDisabled) return;
 
 		if (data.length > 1) {
-			const modalStyle = modalRef.current.style.display;
-			modalRef.current.style.display = modalStyle !== "block" ? "block" : "none";
+			showModal();
 		} else {
 			setIsButtonDisabled(true);
 			setTimeout(() => setIsButtonDisabled(false), 500);
@@ -134,7 +135,7 @@ const WordTranslate = () => {
 	const onLoadWordInfo = () => {
 
 		const translateContent = data?.map((word, i) => {
-			return <WordTranslateBlock data={word} key={i} />
+			return <WordTranslateBlock data={word} key={i} closeModal={closeModal} />
 		})
 
 		const partsFavouriteWord = parts.length > 1 ? parts.map((part, i) => {
@@ -158,12 +159,7 @@ const WordTranslate = () => {
 			<div className="translate__title_section">
 				<h2>Словарь</h2>
 				<div className="tabs">
-					<div className="variant-part_modal" ref={modalRef}>
-						<h5>Выберите, слово какой части речи вы хотите добавить в избранное:</h5>
-						<ul className="part__list">
-							{partsFavouriteWord}
-						</ul>
-					</div>
+					{modal ? <FavouriteModal partsFavouriteWord={partsFavouriteWord} hideModal={closeModal} /> : null}
 					<motion.button
 						onClick={toggleFavourite}
 						disabled={isButtonDisabled}
@@ -212,12 +208,13 @@ const WordTranslate = () => {
 	)
 }
 
-const WordTranslateBlock = ({ data }) => {
+const WordTranslateBlock = ({ data, closeModal }) => {
 
 	const dispatch = useDispatch();
 
 	const onSubmitWord = (word) => {
 		const lang = detectLanguage(word.toLowerCase());
+		closeModal();
 		dispatch(fetchWord({ word, lang }));
 	}
 
