@@ -3,13 +3,12 @@
 .collection__modal {
 
     position: absolute;
-    top: 95px;
-    right: 15%;
+    top: 60px;
+    right: 0;
     z-index: 1;
 
-
-    width: 180%;
-    max-width: 415px;
+    width: 415px;
+    min-width: 260px;
     min-height: 215px;
     padding: 15px;
     border-radius: 20px;

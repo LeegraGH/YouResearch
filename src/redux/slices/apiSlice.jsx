@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { addFavouriteWord, getContent, getFavouriteWord, deleteFavouriteWord } from "../../services/firebase/firebaseService";
+import { getContent, getFavouriteWord, deleteContent, addContent, getCollectionWords } from "../../services/firebase/firebaseService";
 
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "/" }),
-    tagTypes: ['Users', 'Favourite', 'Collections'],
+    tagTypes: ['Users', 'Favourite', 'Collections', 'CollectionWords'],
     endpoints: (builder) => ({
+
         // favourite
         getFavouriteWords: builder.query({
             queryFn: async (user) => {
@@ -24,26 +25,39 @@ export const apiSlice = createApi({
         }),
         addFavouriteWord: builder.mutation({
             queryFn: async ({ user, word }) => {
-                return await addFavouriteWord({ word });
+                return await addContent({ type: "favourites", content: word });
             },
             invalidatesTags: ['Favourite']
         }),
         deleteFavouriteWord: builder.mutation({
             queryFn: async ({ user, wordId }) => {
-                return await deleteFavouriteWord({ wordId });
+                return await deleteContent({ type: "favourites", contentId: wordId });
             },
             invalidatesTags: ['Favourite']
         }),
 
         // collections
         getCollections: builder.query({
-            queryFn: async (user) => {
+            queryFn: async () => {
                 const data = await getContent("collections");
                 return { data };
             },
             providesTags: ['Collections']
         }),
+        createCollection: builder.mutation({
+            queryFn: async (collection) => {
+                return await addContent({ type: "collections", content: collection });
+            },
+            invalidatesTags: ['Collections']
+        }),
+        getCollectionWords: builder.query({
+            queryFn: async (collectionId) => {
+                const data = await getCollectionWords({ collectionId });
+                return { data };
+            },
+            providesTags: ['CollectionWords']
+        }),
     })
 })
 
-export const { useGetFavouriteWordsQuery, useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation, useGetCollectionsQuery } = apiSlice;
+export const { useGetFavouriteWordsQuery, useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation, useGetCollectionsQuery, useCreateCollectionMutation, useGetCollectionWordsQuery } = apiSlice;

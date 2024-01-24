@@ -21,5 +21,5 @@ export const useModal = () => {
         setModal(modal => !modal);
     }
 
-    return { modal, setModal, closeModal, showModal, checkCloseModal, toggleModal };
+    return { modal, closeModal, showModal, checkCloseModal, toggleModal };
 }

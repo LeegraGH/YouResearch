@@ -28,23 +28,24 @@ const SearchForm = () => {
                 }
                 return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
                 onSubmitWord(values.word);
                 setSubmitting(false);
                 if (location.pathname === "/") navigate("/dictionary");
+                resetForm();
             }}>
-            {({ dirty, isSubmitting }) => (
+            {({ isSubmitting }) => (
                 <Form className="search-word">
                     <div className="word__block">
                         <Field type="text" name="word" placeholder="Какое слово исследуем сегодня?" />
                         {location.pathname === "/" ? <ErrorMessage name="word" component="div" className="word__block__error" /> : null}
                     </div>
-                    <button type="submit" disabled={!dirty || isSubmitting}>
+                    <button type="submit" disabled={isSubmitting}>
                         Исследовать
                     </button>
                 </Form>
             )}
-        </Formik>
+        </Formik >
     )
 }
 

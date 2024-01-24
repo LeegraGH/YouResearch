@@ -66,9 +66,9 @@ const WordTranslate = () => {
 							word: data[i].tr[0].text
 						}
 					}
-					addWord({ word }).unwrap();
+					addWord({ word });
 				} else {
-					deleteWord({ wordId: chosenWord[0].id }).unwrap();
+					deleteWord({ wordId: chosenWord[0].id });
 				}
 				break;
 			}
@@ -106,10 +106,6 @@ const WordTranslate = () => {
 
 			}
 		}
-	}
-
-	const onHideModal = () => {
-		modalRef.current.style.display = "none";
 	}
 
 	const onLoadSkeletonBlock = useMemo(() => {
@@ -170,7 +166,6 @@ const WordTranslate = () => {
 					</div>
 					<motion.button
 						onClick={toggleFavourite}
-						// onBlur={onHideModal}
 						disabled={isButtonDisabled}
 						className="tab"
 						whileHover={{ scale: 1.1 }}

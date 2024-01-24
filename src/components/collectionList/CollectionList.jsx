@@ -1,7 +1,6 @@
 import { useContext } from "react";
 
 import CollectionItem from '../collectionItem/CollectionItem';
-import ErrorMessage from "../errorMessage/ErrorMessage";
 import Spinner from "../spinner/Spinner";
 import { CollectionContext } from "../../contexts/Contexts";
 import { useGetCollectionsQuery } from "../../redux/slices/apiSlice";
@@ -11,10 +10,10 @@ import './collectionList.scss';
 const CollectionList = () => {
 
     const searchCollection = useContext(CollectionContext);
-    const { data = [], isSuccess, isLoading, isFetching } = useGetCollectionsQuery();
+    const { data = [], isSuccess, isError, isLoading, isFetching } = useGetCollectionsQuery();
 
     const onLoadCollections = (data) => {
-        return (searchCollection === "" ? data : data.filter(({ title }) => title.toLowerCase().includes(searchCollection))).map(({ id, title }) => { return <CollectionItem key={id} title={title} /> })
+        return (searchCollection === "" ? data : data.filter(({ title }) => title.toLowerCase().includes(searchCollection))).map(({ id, title }) => { return <CollectionItem key={id} title={title} id={id} /> })
     }
 
     const onLoadContent = (data) => {
@@ -29,7 +28,9 @@ const CollectionList = () => {
             } else return <div className="collection__message">Нет ни одной коллекции</div>;
         } else if (isLoading || isFetching) {
             return <Spinner />;
-        } else return <div className="collection__message">Ошибка при загрузке коллекций</div>;
+        } else if (isError) {
+            return <div className="collection__message">Ошибка при загрузке коллекций</div>;
+        }
     }
 
     const userContent = onLoadContent(data);
