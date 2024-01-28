@@ -19,7 +19,7 @@ const Main = ({ Component }) => {
     let location = useLocation();
     let locationPath = location.pathname;
 
-    const { modal, closeModal, showModal, checkCloseModal } = useModal();
+    const [modal, closeModal, showModal, checkCloseModal] = useModal();
 
     return (
         <div className="main__info">

@@ -20,7 +20,7 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
 
     const [searchTab, setSearchTab] = useState(false);
 
-    const { modal, closeModal, showModal } = useModal();
+    const [modal, closeModal, showModal] = useModal();
 
     useEffect(() => {
         if (location.pathname !== "/") setSearchTab(true);

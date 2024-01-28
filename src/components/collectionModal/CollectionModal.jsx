@@ -6,7 +6,7 @@ import { useCreateCollectionMutation, useGetCollectionsQuery } from '../../redux
 import "./collectionModal.scss";
 import { useEffect } from 'react';
 
-const CollectionModal = ({ hideModal }) => {
+const CollectionModal = ({ hideModal, page }) => {
 
     const { data: collections = [] } = useGetCollectionsQuery();
     const [addCollection] = useCreateCollectionMutation();
@@ -59,7 +59,7 @@ const CollectionModal = ({ hideModal }) => {
                 }}
             >
                 {() => (
-                    <Form className="create__block">
+                    <Form className={page ? "create__block change-color" : "create__block"}>
                         <div className="title_input">
                             <Field type="text" name="title" id="title" placeholder="Введите название коллекции" />
                             <ErrorMessage className="title_input__error" name="title" component="span" />

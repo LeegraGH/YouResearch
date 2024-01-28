@@ -12,8 +12,9 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import Spinner from "../spinner/Spinner";
 import { useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
 import { isEnglish } from "../../utils/Alphabet";
-import { useModal } from '../../hooks/modal.hook';
+import { useModal } from "../../hooks/modal.hook";
 import FavouriteModal from "../favouriteModal/FavouriteModal";
+import CollectionWordModal from "../collectionWordModal/CollectionWordModal";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
 import heart from "../../resources/icons/heart.svg";
@@ -24,14 +25,14 @@ const WordTranslate = () => {
 
 	const [favouriteStatus, setFavouriteStatus] = useState(false);
 	const [parts, setParts] = useState([]);
-	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+	const [isFavouriteButtonDisabled, setIsFavouriteButtonDisabled] = useState(false);
 
 	const { data, status } = useSelector(state => state.word);
 
-	const { modal, closeModal, showModal } = useModal();
+	const [favouriteModal, closeFavouriteModal, showFavouriteModal] = useModal();
+	const [collectionModal, closeCollectionModal, showCollectionModal] = useModal();
 
 	const query = (status === "idle" && data !== null && data.length > 0) ? { word: data[0].text } : skipToken;
-
 	const { data: favourite = [] } = useGetFavouriteWordQuery(query);
 
 	const [addWord] = useAddFavouriteWordMutation();
@@ -78,19 +79,18 @@ const WordTranslate = () => {
 	}
 
 	const toggleFavourite = () => {
-		if (isButtonDisabled) return;
+		if (isFavouriteButtonDisabled) return;
 
 		if (data.length > 1) {
-			showModal();
+			showFavouriteModal();
 		} else {
-			setIsButtonDisabled(true);
-			setTimeout(() => setIsButtonDisabled(false), 500);
+			setIsFavouriteButtonDisabled(true);
+			setTimeout(() => setIsFavouriteButtonDisabled(false), 500);
 
 			if (favouriteStatus) {
+				deleteWord({ wordId: favourite[0].id });
 				setFavouriteStatus(false);
-				deleteWord({ wordId: favourite[0].id }).unwrap();
 			} else {
-				setFavouriteStatus(true);
 				let word = {
 					part: data[0].pos,
 					translation: data[0].tr[0].text,
@@ -103,8 +103,8 @@ const WordTranslate = () => {
 						word: data[0].tr[0].text
 					}
 				}
-				addWord({ word }).unwrap();
-
+				addWord({ word });
+				setFavouriteStatus(true);
 			}
 		}
 	}
@@ -135,12 +135,12 @@ const WordTranslate = () => {
 	const onLoadWordInfo = () => {
 
 		const translateContent = data?.map((word, i) => {
-			return <WordTranslateBlock data={word} key={i} closeModal={closeModal} />
+			return <WordTranslateBlock data={word} key={i} closeFavouriteModal={closeFavouriteModal} />
 		})
 
 		const partsFavouriteWord = parts.length > 1 ? parts.map((part, i) => {
 			const formatPart = isEnglish(part.part) ? part.part : formatPartOfSpeech(part.part);
-			const formatWord = isEnglish(part.word) ? part.word : data[i].tr[0].text;
+			const formatWord = isEnglish(part.word) ? part.word : data[i]?.tr[0].text;
 
 			const isChosenWord = favourite.filter(word => word.part === formatPart && word.word === formatWord);
 
@@ -159,16 +159,18 @@ const WordTranslate = () => {
 			<div className="translate__title_section">
 				<h2>Словарь</h2>
 				<div className="tabs">
-					{modal ? <FavouriteModal partsFavouriteWord={partsFavouriteWord} hideModal={closeModal} /> : null}
+					{favouriteModal ? <FavouriteModal partsFavouriteWord={partsFavouriteWord} hideModal={closeFavouriteModal} /> : null}
 					<motion.button
 						onClick={toggleFavourite}
-						disabled={isButtonDisabled}
+						disabled={isFavouriteButtonDisabled}
 						className="tab"
 						whileHover={{ scale: 1.1 }}
 						whileTap={{ scale: 0.9 }}>
 						<img src={favouriteStatus ? heart : empty_heart} alt="favourite" />
 					</motion.button>
+					{collectionModal ? <CollectionWordModal parts={parts} word={data} hideModal={closeCollectionModal} /> : null}
 					<motion.button
+						onClick={showCollectionModal}
 						className="tab"
 						whileHover={{ scale: 1.1 }}
 						whileTap={{ scale: 0.9 }}>
@@ -208,13 +210,13 @@ const WordTranslate = () => {
 	)
 }
 
-const WordTranslateBlock = ({ data, closeModal }) => {
+const WordTranslateBlock = ({ data, closeFavouriteModal }) => {
 
 	const dispatch = useDispatch();
 
 	const onSubmitWord = (word) => {
 		const lang = detectLanguage(word.toLowerCase());
-		closeModal();
+		closeFavouriteModal();
 		dispatch(fetchWord({ word, lang }));
 	}
 

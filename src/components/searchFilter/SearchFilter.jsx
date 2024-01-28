@@ -18,8 +18,8 @@ const SearchFilter = (props) => {
     }
 
     return (
-        <div className="search-filter">
-            <input onChange={onLoadFilter} value={word} type="text" placeholder={props.placeholderName} />
+        <div className={props.fullSize ? "search-filter full-size" : "search-filter"}>
+            <input onChange={onLoadFilter} value={word} name="search_filter" type="text" placeholder={props.placeholderName} />
         </div>
     )
 }

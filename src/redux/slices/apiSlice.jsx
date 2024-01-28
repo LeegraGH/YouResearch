@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { getContent, getFavouriteWord, deleteContent, addContent, getCollectionWords } from "../../services/firebase/firebaseService";
+import { getContent, getFavouriteWord, deleteContent, deleteWordFromCollection, addContent, getCollectionWords, getCollectionWord, addCollectionWord } from "../../services/firebase/firebaseService";
 
 export const apiSlice = createApi({
     reducerPath: "api",
@@ -57,7 +57,26 @@ export const apiSlice = createApi({
             },
             providesTags: ['CollectionWords']
         }),
+        getCollectionWord: builder.query({
+            queryFn: async (word) => {
+                const data = await getCollectionWord({ word });
+                return { data };
+            },
+            providesTags: ['CollectionWords']
+        }),
+        deleteCollectionWord: builder.mutation({
+            queryFn: async ({ path, wordId }) => {
+                return await deleteWordFromCollection({ path, wordId });
+            },
+            invalidatesTags: ['CollectionWords', 'Collections']
+        }),
+        createCollectionWord: builder.mutation({
+            queryFn: async ({ word, collectionId }) => {
+                return await addCollectionWord({ word, collectionId });
+            },
+            invalidatesTags: ['CollectionWords', 'Collections']
+        }),
     })
 })
 
-export const { useGetFavouriteWordsQuery, useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation, useGetCollectionsQuery, useCreateCollectionMutation, useGetCollectionWordsQuery } = apiSlice;
+export const { useGetFavouriteWordsQuery, useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation, useGetCollectionsQuery, useCreateCollectionMutation, useGetCollectionWordsQuery, useGetCollectionWordQuery, useDeleteCollectionWordMutation, useCreateCollectionWordMutation } = apiSlice;

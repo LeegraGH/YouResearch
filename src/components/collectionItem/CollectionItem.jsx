@@ -7,7 +7,7 @@ import CollectionItemModal from '../collectionItemModal/CollectionItemModal';
 
 const CollectionItem = ({ title, id }) => {
 
-    const { modal, closeModal, checkCloseModal, showModal } = useModal();
+    const [modal, closeModal, showModal, checkCloseModal] = useModal();
 
     return (
         <>

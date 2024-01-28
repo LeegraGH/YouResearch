@@ -157,4 +157,22 @@
             cursor: pointer;
         }
     }
+
+    .change-color {
+
+        .public_input {
+            input:checked+.public_label {
+                background-color: $mint-color;
+            }
+
+            input:checked+.public_label {
+                background-color: $mint-color;
+                transition: all 0.3s ease-in-out;
+            }
+        }
+
+        .btn {
+            background: $mint-color;
+        }
+    }
 }
