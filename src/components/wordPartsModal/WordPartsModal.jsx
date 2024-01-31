@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import './favouriteModal.scss';
+import './wordPartsModal.scss';
 
-const FavouriteModal = ({ partsFavouriteWord, hideModal }) => {
+const WordPartsModal = ({ offsetRight, partsWord, hideModal, children }) => {
 
     useEffect(() => {
         setTimeout(() => {
@@ -14,13 +14,13 @@ const FavouriteModal = ({ partsFavouriteWord, hideModal }) => {
     }, [])
 
     return (
-        <div className="variant-part_modal" onClick={(e) => e.stopPropagation()}>
-            <h5>Выберите, слово какой части речи вы хотите добавить в избранное:</h5>
+        <div className="variant-part_modal" style={{ right: offsetRight }} onClick={(e) => e.stopPropagation()}>
+            {children}
             <ul className="part__list">
-                {partsFavouriteWord}
+                {partsWord}
             </ul>
         </div >
     )
 }
 
-export default FavouriteModal;
+export default WordPartsModal;

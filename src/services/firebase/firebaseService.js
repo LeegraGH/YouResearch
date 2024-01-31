@@ -1,6 +1,7 @@
 import { collection, getDocs, addDoc, getDoc, deleteDoc, doc, query, where } from 'firebase/firestore';
 import { isEnglish } from "../../utils/Alphabet";
 import { db } from './firebaseConfig';
+import { formatPartOfSpeech } from '../../utils/PartsOfSpeech';
 // Follow this pattern to import other Firebase services
 // import { } from 'firebase/<service>';
 
@@ -60,8 +61,9 @@ export async function getCollectionWords({ collectionId, userId = "r49nhVOZMrViz
 };
 
 export async function getCollectionWord({ userId = "r49nhVOZMrVizkRbcnJ1", word }) {
-    const what = isEnglish(word) ? "word" : "translation";
-    const col = query(collection(db, "users", userId, "collection_words"), where(what, '==', word));
+    const what = isEnglish(word.word) ? "word" : "translation";
+    const formatPart = isEnglish(word.part) ? word.part : formatPartOfSpeech(word.part);
+    const col = query(collection(db, "users", userId, "collection_words"), where(what, '==', word.word), where("part", "==", formatPart));
     const docSnapshot = await getDocs(col);
     const res = docSnapshot.docs.map(doc => {
         const data = doc.data();

@@ -13,7 +13,7 @@ import Spinner from "../spinner/Spinner";
 import { useAddFavouriteWordMutation, useGetFavouriteWordQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
 import { isEnglish } from "../../utils/Alphabet";
 import { useModal } from "../../hooks/modal.hook";
-import FavouriteModal from "../favouriteModal/FavouriteModal";
+import WordPartsModal from "../wordPartsModal/WordPartsModal";
 import CollectionWordModal from "../collectionWordModal/CollectionWordModal";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
@@ -42,7 +42,8 @@ const WordTranslate = () => {
 		if (favourite.length > 0) {
 			setFavouriteStatus(true);
 		} else setFavouriteStatus(false);
-	}, [favourite]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		if (data !== null && data.length > 0) {
@@ -159,7 +160,7 @@ const WordTranslate = () => {
 			<div className="translate__title_section">
 				<h2>Словарь</h2>
 				<div className="tabs">
-					{favouriteModal ? <FavouriteModal partsFavouriteWord={partsFavouriteWord} hideModal={closeFavouriteModal} /> : null}
+					{favouriteModal ? <WordPartsModal offsetRight={"68px"} partsWord={partsFavouriteWord} hideModal={closeFavouriteModal}><h5>Выберите, слово какой части речи вы хотите добавить в избранное:</h5></WordPartsModal> : null}
 					<motion.button
 						onClick={toggleFavourite}
 						disabled={isFavouriteButtonDisabled}

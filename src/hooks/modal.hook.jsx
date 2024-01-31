@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-export const useModal = () => {
+export const useModal = (value = false) => {
 
-    const [modal, setModal] = useState(false);
+    const [modal, setModal] = useState(value);
 
     const showModal = () => {
         setModal(true);

@@ -1,13 +1,10 @@
 @import "../../styles/variables.scss";
 
-.hidden__modal {
-    display: none;
-}
-
 .collection-word__modal {
     position: absolute;
     top: 60px;
     right: 0;
+    display: none;
 
     width: 400px;
     min-height: 100px;
