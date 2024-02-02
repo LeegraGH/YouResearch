@@ -2,6 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
 @import './variables';
 
+:root {
+    --yellow-color: #{$yellow-color};
+    --pink-color: #{$pink-color};
+    --mint-color: #{$mint-color};
+    --purple-color: #{$purple-color};
+}
+
 * {
     font-family: 'Comfortaa', sans-serif;
     color: $main-color;
@@ -14,11 +21,6 @@
 body {
     background-color: $back-color;
 }
-
-// html,
-// body {
-//     height: 100%;
-// }
 
 ul,
 li {

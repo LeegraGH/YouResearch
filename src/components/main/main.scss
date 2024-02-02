@@ -42,6 +42,11 @@
                     margin-right: 10px;
                 }
 
+                .active_wrap__img {
+                    margin-right: 20px;
+                    animation: offsetPageNav .3s ease-out;
+                }
+
                 .active_page__nav {
                     display: block;
                     position: absolute;
@@ -50,6 +55,28 @@
                     border-radius: 0px 20px 20px 0px;
                     padding: 25px 0;
                     z-index: -1;
+
+                    animation: appearColor .3s ease-out;
+                }
+
+                @keyframes appearColor {
+                    0% {
+                        width: 0;
+                    }
+
+                    100% {
+                        width: 65px;
+                    }
+                }
+
+                @keyframes offsetPageNav {
+                    0% {
+                        margin-right: 10px;
+                    }
+
+                    100% {
+                        margin-right: 20px;
+                    }
                 }
             }
         }
@@ -85,6 +112,7 @@
 
         .rectangle-mint {
             position: absolute;
+            top: 30px;
             right: 0;
             margin-right: -24px;
             z-index: -1;

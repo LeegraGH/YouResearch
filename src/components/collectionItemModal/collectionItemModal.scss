@@ -1,5 +1,51 @@
+@import '../../styles/variables';
+
 .collection-words__modal {
-    width: 50%;
-    height: 50px;
-    background: white;
+    position: relative;
+    width: 80%;
+    max-height: 650px;
+    padding: 65px 75px;
+    background: #FFFFFF;
+    border-radius: 40px;
+
+
+    h2.title {
+        color: $main-color;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: normal;
+        margin-bottom: 20px;
+    }
+
+    i {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        color: $main-color;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .collection__section {
+        padding: 10px;
+        max-height: 440px;
+        overflow-y: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        justify-content: space-between;
+        column-gap: 35px;
+        row-gap: 25px;
+        margin-top: 30px;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+            border-radius: 50px;
+            background: #DBE7EA;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 50px;
+            background: $purple-color;
+        }
+    }
 }

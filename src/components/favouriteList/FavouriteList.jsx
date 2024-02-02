@@ -3,7 +3,7 @@ import { useContext } from "react";
 import Spinner from "../spinner/Spinner";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import { useGetFavouriteWordsQuery, useDeleteFavouriteWordMutation } from "../../redux/slices/apiSlice";
-import FavouriteItem from "../favouriteItem/FavouriteItem";
+import WordItem from "../wordItem/WordItem";
 import { FavouriteContext } from "../../contexts/Contexts";
 import { isEnglish } from "../../utils/Alphabet";
 
@@ -18,7 +18,7 @@ const FavouriteList = () => {
     const onLoadFavourites = (data) => {
         return (searchFavourite === "" ? data : data.filter(({ word, translation }) =>
             isEnglish(searchFavourite) ? word.toLowerCase().includes(searchFavourite) : translation.toLowerCase().includes(searchFavourite))).map(({ id, word, translation }) => {
-                return <FavouriteItem key={id} deleteFavourite={() => deleteWord({ wordId: id })} word={word} translation={translation} />
+                return <WordItem key={id} deleteWord={() => deleteWord({ wordId: id })} word={word} translation={translation} />
             })
     }
 

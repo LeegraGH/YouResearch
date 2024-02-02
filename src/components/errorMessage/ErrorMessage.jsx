@@ -1,13 +1,12 @@
 
+import errorImage from "../../resources/img/search-error.svg";
 import "./errorMessage.scss";
 
-import errorImage from "../../resources/img/search-error.svg";
-
-const ErrorMessage = ({ children }) => {
+const ErrorMessage = ({ widthImage, children }) => {
 
     return (
         <div className="error__block">
-            <img src={errorImage} alt="error" />
+            <img src={errorImage} alt="error" style={{ width: widthImage }} />
             <div className="error__message">{children} 😔</div>
         </div>
     )

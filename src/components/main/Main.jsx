@@ -27,10 +27,10 @@ const Main = ({ Component }) => {
                 <div className="grid__content">
                     <aside className="sidebar">
                         <ul className="nav__list">
-                            <NavigationItem to="/" src={home} name="Главная" color="#FDDC63" />
-                            <NavigationItem to="/dictionary" src={dictionary} name="Словарь" color="#6BDDC8" />
-                            <NavigationItem to="/favourite" src={heart} name="Избранное" color="#F973AB" />
-                            <NavigationItem to="/collections" src={collections} name="Коллекции" color="#FDDC63" />
+                            <NavigationItem to="/" src={home} name="Главная" color='var(--yellow-color)' />
+                            <NavigationItem to="/dictionary" src={dictionary} name="Словарь" color='var(--mint-color)' />
+                            <NavigationItem to="/favourite" src={heart} name="Избранное" color='var(--pink-color)' />
+                            <NavigationItem to="/collections" src={collections} name="Коллекции" color='var(--purple-color)' />
                             <NavigationItem to="/profile" src={profile} name="Профиль" color="#6BDDC8" />
                             <li className="nav__link" onClick={showModal}>
                                 <span className="wrap__img"><img src={logout} alt="Выйти" /></span>
@@ -63,7 +63,7 @@ const NavigationItem = ({ to, src, name, color }) => {
                 {({ isActive }) => (
                     <>
                         {isActive ? <span className="active_page__nav" style={{ backgroundColor: color }}></span> : null}
-                        <span className="wrap__img" style={isActive ? { marginRight: 20 } : null}><img src={src} alt={name} /></span>
+                        <span className={`wrap__img ${isActive ? 'active_wrap__img' : null}`}><img src={src} alt={name} /></span>
                         {name}
                     </>
                 )}

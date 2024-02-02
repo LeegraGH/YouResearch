@@ -1,27 +1,26 @@
 @import '../../styles/variables.scss';
 
 .collection-card {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: space-between;
-    min-width: 243px;
-    max-width: 243px;
-    height: 347px;
-    padding: 25px;
-    cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: space-between;
+  min-width: 243px;
+  max-width: 243px;
+  height: 347px;
+  padding: 25px;
+  cursor: pointer;
 
-    border-radius: 30px;
-    // box-shadow: 0px 2px 13.1px 0px rgba(0, 0, 0, 0.12);
-    // background: lightgray 50%;
+  border-radius: 30px;
+  box-shadow: 0 2px 13.1px 0 rgba(0, 0, 0, 0.12);
 
-    background-color: #b2cfec;
+  background-color: #b2cfec;
 
-    h3.title {
-        color: $main-color;
-        font-size: 22px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-    }
+  h2.title-item, i {
+    color: $main-color;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
 }
