@@ -23,4 +23,9 @@
     font-weight: 500;
     line-height: normal;
   }
+
+  h2.title-item {
+    word-wrap: break-word;
+    max-width: 150px;
+  }
 }

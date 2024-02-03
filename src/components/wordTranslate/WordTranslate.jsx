@@ -17,7 +17,7 @@ import {
 } from "../../redux/slices/apiSlice";
 import {isEnglish} from "../../utils/Alphabet";
 import {useModal} from "../../hooks/modal.hook";
-import WordPartsModal from "../wordPartsModal/WordPartsModal";
+import PartsWordModal from "../partsWordModal/PartsWordModal";
 import CollectionWordModal from "../collectionWordModal/CollectionWordModal";
 
 import empty_heart from "../../resources/icons/empty_heart.svg";
@@ -164,9 +164,9 @@ const WordTranslate = () => {
             <div className="translate__title_section">
                 <h2>Словарь</h2>
                 <div className="tabs">
-                    {favouriteModal ? <WordPartsModal offsetRight={"68px"} partsWord={partsFavouriteWord}
+                    {favouriteModal ? <PartsWordModal offsetRight={"68px"} partsWord={partsFavouriteWord}
                                                       hideModal={closeFavouriteModal}><h5>Выберите, слово какой части
-                        речи вы хотите добавить в избранное:</h5></WordPartsModal> : null}
+                        речи вы хотите добавить в избранное:</h5></PartsWordModal> : null}
                     <motion.button
                         onClick={toggleFavourite}
                         disabled={isFavouriteButtonDisabled}

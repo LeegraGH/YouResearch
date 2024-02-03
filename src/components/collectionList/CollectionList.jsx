@@ -3,39 +3,47 @@ import {useContext} from "react";
 import CollectionItem from '../collectionItem/CollectionItem';
 import Spinner from "../spinner/Spinner";
 import {CollectionContext} from "../../contexts/Contexts";
-import {useGetCollectionsQuery} from "../../redux/slices/apiSlice";
+import {useGetAppCollectionsQuery, useGetCollectionsQuery} from "../../redux/slices/apiSlice";
 
 import './collectionList.scss';
 
 const CollectionList = () => {
 
     const searchCollection = useContext(CollectionContext);
-    const {data = [], isSuccess, isError, isLoading, isFetching} = useGetCollectionsQuery();
+    const {data = [], isSuccess, isLoading, isFetching} = useGetCollectionsQuery();
+    const {
+        data: appCollections = [],
+        isSuccess: isAppSuccess,
+        isLoading: isAppLoading,
+        isFetching: isAppFetching
+    } = useGetAppCollectionsQuery();
 
-    const onLoadCollections = (data) => {
-        return (searchCollection === "" ? data : data.filter(({title}) => title.toLowerCase().includes(searchCollection))).map(({id, title}) => {
-            return <CollectionItem key={id} title={title} id={id}/>
-        })
+    const onLoadCollections = (data,type) => {
+        return (searchCollection === "" ? data : data.filter(({title}) => title.toLowerCase()
+            .includes(searchCollection)))
+            .map(({id, title}) => {
+                return <CollectionItem key={id} title={title} id={id} type={type}/>
+            })
     }
 
-    const onLoadContent = (data) => {
+    const onLoadContent = (type, data, isSuccess, isLoading, isFetching) => {
         if (isSuccess) {
             if (data.length > 0) {
-                const collections = onLoadCollections(data);
+                const collections = onLoadCollections(data, type);
                 return collections.length > 0 ? <div className="collection__block">
                     {collections}
                 </div> : <div className="collection__message">Ни одной коллекции не найдено</div>;
             } else return <div className="collection__message">Нет ни одной коллекции</div>;
         } else if (isLoading || isFetching) {
             return <Spinner/>;
-        } else if (isError) {
+        } else {
             return <div className="collection__message">Ошибка при загрузке коллекций</div>;
         }
     }
 
-    const userContent = onLoadContent(data);
+    const userContent = onLoadContent("user", data, isSuccess, isLoading, isFetching);
+    const appContent = onLoadContent("app",appCollections, isAppSuccess, isAppLoading, isAppFetching);
     // const publicContent = onLoadContent(data);
-    // const content = onLoadContent(data);
 
 
     return (<div className="collection">
@@ -45,16 +53,7 @@ const CollectionList = () => {
         </section>
         <section className="collection__section">
             <h2 className="title">Коллекции YouResearch</h2>
-            <div className="collection__block">
-                <CollectionItem/>
-                <CollectionItem/>
-                <CollectionItem/>
-                <CollectionItem/>
-                <CollectionItem/>
-                <CollectionItem/>
-                <CollectionItem/>
-                <CollectionItem/>
-            </div>
+            {appContent}
         </section>
         <section className="collection__section">
             <h2 className="title">Публичные Коллекции</h2>

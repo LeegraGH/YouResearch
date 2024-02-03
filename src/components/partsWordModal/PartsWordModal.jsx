@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import './wordPartsModal.scss';
+import './partsWordModal.scss';
 
-const WordPartsModal = ({ offsetRight, partsWord, hideModal, children }) => {
+const PartsWordModal = ({ offsetRight, partsWord, hideModal, children }) => {
 
     useEffect(() => {
         setTimeout(() => {
@@ -23,4 +23,4 @@ const WordPartsModal = ({ offsetRight, partsWord, hideModal, children }) => {
     )
 }
 
-export default WordPartsModal;
+export default PartsWordModal;

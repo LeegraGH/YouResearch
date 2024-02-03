@@ -1,51 +1,78 @@
 @import '../../styles/variables';
 
 .collection-words__modal {
-    position: relative;
-    width: 80%;
-    max-height: 650px;
-    padding: 65px 75px;
-    background: #FFFFFF;
-    border-radius: 40px;
+  position: relative;
+  width: 80%;
+  max-width: 1350px;
+  height: 90%;
+  min-height: 375px;
+  max-height: 800px;
+  padding: 65px 75px;
+  background: #FFFFFF;
+  border-radius: 40px;
+
+  .collection_head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    height: 50px;
+    width: 100%;
+
+    img {
+      cursor: pointer;
+    }
+  }
 
 
-    h2.title {
-        color: $main-color;
-        font-size: 30px;
-        font-weight: 500;
-        line-height: normal;
-        margin-bottom: 20px;
+  h2.title {
+    color: $main-color;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  i {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: $main-color;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .collection-no-words__section{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100% - 50px - 30px);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .collection-words__section {
+    padding: 10px;
+    height: calc(100% - 50px - 30px);
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-rows: repeat(auto-fill, 85px);
+    justify-content: space-between;
+    column-gap: 35px;
+    row-gap: 25px;
+    margin-top: 30px;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      border-radius: 50px;
+      background: #DBE7EA;
     }
 
-    i {
-        position: absolute;
-        top: 30px;
-        right: 30px;
-        color: $main-color;
-        font-size: 30px;
-        cursor: pointer;
+    &::-webkit-scrollbar-thumb {
+      border-radius: 50px;
+      background: $purple-color;
     }
-
-    .collection__section {
-        padding: 10px;
-        max-height: 440px;
-        overflow-y: auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        justify-content: space-between;
-        column-gap: 35px;
-        row-gap: 25px;
-        margin-top: 30px;
-
-        &::-webkit-scrollbar {
-            width: 5px;
-            border-radius: 50px;
-            background: #DBE7EA;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            border-radius: 50px;
-            background: $purple-color;
-        }
-    }
+  }
 }

@@ -7,11 +7,14 @@ import {useDeleteCollectionMutation} from "../../redux/slices/apiSlice";
 
 
 import './collectionItem.scss';
-const CollectionItem = ({title, id}) => {
+import DeleteCollectionModal from "../deleteCollectionModal/DeleteCollectionModal";
+
+const CollectionItem = ({title, id, type}) => {
 
     const [deleteTab, setDeleteTab] = useState(false);
 
     const [modal, closeModal, showModal, checkCloseModal] = useModal();
+    const [deleteModal, closeDeleteModal, showDeleteModal, checkCloseDeleteModal] = useModal();
 
     const [deleteCollection] = useDeleteCollectionMutation();
 
@@ -23,7 +26,7 @@ const CollectionItem = ({title, id}) => {
         setDeleteTab(false);
     }
 
-    const onDeleteCollection = (id) =>{
+    const onDeleteCollection = (id) => {
         deleteCollection(id);
     }
 
@@ -37,12 +40,17 @@ const CollectionItem = ({title, id}) => {
             <div className="collection-card" style={{backgroundColor: cardColor}} onClick={showModal}
                  onMouseOver={onShowDeleteTab} onMouseLeave={onHideDeleteTab}>
                 <h2 className='title-item'>{title}</h2>
-                {deleteTab ? <i className="fa-regular fa-trash-can" onClick={(e)=>{
+                {(deleteTab && type === "user") ? <i className="fa-regular fa-trash-can" onClick={(e) => {
                     e.stopPropagation();
-                    onDeleteCollection(id);
+                    showDeleteModal();
                 }}></i> : null}
             </div>
-            {modal ? createPortal(<CollectionItemModal title={title} collectionId={id} closeModal={closeModal}
+            {deleteModal ? createPortal(<DeleteCollectionModal title={title}
+                                                               deleteCollection={() => onDeleteCollection(id)}
+                                                               closeModal={closeDeleteModal}
+                                                               checkCloseModal={checkCloseDeleteModal}/>, document.body) : null}
+            {modal ? createPortal(<CollectionItemModal type={type} title={title} collectionId={id}
+                                                       closeModal={closeModal}
                                                        checkCloseModal={checkCloseModal}/>, document.body) : null}
         </>
     )

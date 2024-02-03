@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-import CollectionModal from '../collectionModal/CollectionModal';
+import AddCollectionModal from '../addCollectionModal/AddCollectionModal';
 import SearchForm from '../searchForm/SearchForm';
 import SearchFilter from '../searchFilter/SearchFilter';
 import { useModal } from '../../hooks/modal.hook';
@@ -16,6 +16,7 @@ import search from "../../resources/icons/search.svg";
 import "./header.scss";
 
 const Header = ({ onLoadFavourite, onLoadCollection }) => {
+
     let location = useLocation();
 
     const [searchTab, setSearchTab] = useState(false);
@@ -43,7 +44,7 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
                                             Создать коллекцию
                                         </button>
                                         {modal
-                                            ? <CollectionModal hideModal={closeModal} />
+                                            ? <AddCollectionModal hideModal={closeModal} />
                                             : null}
                                     </div>
                                 </>

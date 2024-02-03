@@ -1,16 +1,17 @@
 .error {
 
-    &__block {
-        text-align: center;
+  &__block {
+    text-align: center;
+    width: 100%;
 
-        img {
-            width: 50%;
-            height: auto;
-        }
+    img {
+      width: 50%;
+      height: auto;
     }
+  }
 
-    &__message {
-        font-size: 22px;
-        font-weight: 400;
-    }
+  &__message {
+    font-size: 22px;
+    font-weight: 400;
+  }
 }

@@ -23,7 +23,9 @@ const useDictionaryService = () => {
                 } else return { ...tr, syn: [] };
             });
 
-            return translations.length > 0 ? { ...entry, tr: translations } : null;
+            const pos = entry.pos!==undefined?entry.pos:"undefined";
+
+            return translations.length > 0 ? { ...entry, tr: translations, pos } : null;
         }).filter(entry => entry !== null);
 
         return res;

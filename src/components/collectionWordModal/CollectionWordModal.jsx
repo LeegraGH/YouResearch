@@ -8,13 +8,13 @@ import {
     useGetCollectionsQuery,
     useGetCollectionWordQuery
 } from '../../redux/slices/apiSlice';
-import CollectionModal from '../collectionModal/CollectionModal';
+import AddCollectionModal from '../addCollectionModal/AddCollectionModal';
 import {useModal} from '../../hooks/modal.hook';
 import SearchFilter from '../searchFilter/SearchFilter';
 import Spinner from '../spinner/Spinner';
 import {isEnglish} from "../../utils/Alphabet";
 import {formatPartOfSpeech} from "../../utils/PartsOfSpeech";
-import WordPartsModal from '../wordPartsModal/WordPartsModal';
+import PartsWordModal from '../partsWordModal/PartsWordModal';
 
 import './collectionWordModal.scss';
 
@@ -129,7 +129,7 @@ const CollectionWordModal = ({hideModal, parts, word}) => {
                         <span>Новая коллекция</span>
                     </div>
                     <div className="search"><SearchFilter onLoadFilter={onLoadCollection}
-                                                          placeholderName="Поиск по коллекциям" fullSize={true}/>
+                                                          placeholderName="Поиск по коллекциям"/>
                     </div>
                     <ul className="collection__list">
                         {collectionList}
@@ -165,12 +165,12 @@ const CollectionWordModal = ({hideModal, parts, word}) => {
     const formatPartsWord = formatParts();
 
     return (<>
-        {choiceWordCollectionModal ? createPortal(<WordPartsModal partsWord={formatPartsWord}
+        {choiceWordCollectionModal ? createPortal(<PartsWordModal partsWord={formatPartsWord}
                                                                   hideModal={closeChoiceWordCollectionModal}>
             <h5>Выберите, слово какой части речи вы хотите добавить в коллекцию:</h5>
-        </WordPartsModal>, document.querySelector(".translate__title_section .tabs")) : null}
-        {addingCollectionModal ? createPortal(<CollectionModal page={"dictionary"}
-                                                               hideModal={closeAddingCollectionModal}/>, document.querySelector(".translate__title_section .tabs")) : null}
+        </PartsWordModal>, document.querySelector(".translate__title_section .tabs")) : null}
+        {addingCollectionModal ? createPortal(<AddCollectionModal
+            hideModal={closeAddingCollectionModal}/>, document.querySelector(".translate__title_section .tabs")) : null}
         <div className="collection-word__modal"
              style={choiceWordCollectionModal || addingCollectionModal ? {display: "none"} : {display: "block"}}
              onClick={(e) => e.stopPropagation()}>

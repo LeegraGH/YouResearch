@@ -1,37 +1,52 @@
+import {useState} from "react";
+
 import {useGetCollectionWordsQuery} from '../../redux/slices/apiSlice';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import ModalWrapper from '../modalWrapper/ModalWrapper';
 import WordItem from '../wordItem/WordItem';
 import Spinner from '../spinner/Spinner';
 import {useDeleteCollectionWordMutation} from '../../redux/slices/apiSlice';
+import SearchFilter from "../searchFilter/SearchFilter";
 
 import './collectionItemModal.scss';
+import {isEnglish} from "../../utils/Alphabet";
 
-const CollectionItemModal = ({title, collectionId, closeModal, checkCloseModal}) => {
+const CollectionItemModal = ({type, title, collectionId, closeModal, checkCloseModal}) => {
 
-    const {data = [], isSuccess, isLoading, isFetching} = useGetCollectionWordsQuery(collectionId);
+    const [filter, setFilter] = useState("");
+
+    const {data = [], isSuccess, isLoading, isFetching} = useGetCollectionWordsQuery({collectionId, type});
     const [deleteWord] = useDeleteCollectionWordMutation();
 
     const onLoadCollectionWords = (data) => {
-        return data.map(({id, word, translation}) => {
-            return <WordItem key={id} deleteWord={() => deleteWord({collectionId: collectionId, wordId: id})} word={word}
-                             translation={translation}/>
-        })
+        return (filter === "" ? data : data.filter(({word, translation}) =>
+            isEnglish(filter) ? word.toLowerCase().includes(filter) : translation.toLowerCase().includes(filter)))
+            .map(({id, word, translation}) => {
+                return <WordItem key={id}
+                                 deleteWord={() => deleteWord({collectionId: collectionId, wordId: id})}
+                                 word={word}
+                                 translation={translation}/>
+            })
+    }
+    const onLoadFilterWord = (word) => {
+        setFilter(word);
     }
 
     const onLoadContent = (data) => {
+        let noWordsContent;
         if (isSuccess) {
             if (data.length > 0) {
-                const words = onLoadCollectionWords(data);
-                return (
-                    <div className="collection__section">
-                        {words}
-                    </div>
-                )
-            } else return <ErrorMessage widthImage={"400px"}>В коллекции {title} пока что пусто...</ErrorMessage>;
+                const wordsContent = onLoadCollectionWords(data);
+                return wordsContent.length > 0 ?
+                    <div className="collection-words__section">
+                        {wordsContent}
+                    </div> :
+                    <ErrorMessage widthImage={"400px"}>Ни одного слова не найдено...</ErrorMessage>;
+            } else noWordsContent = <ErrorMessage widthImage={"400px"}>В коллекции пока что пусто...</ErrorMessage>;
         } else if (isLoading || isFetching) {
-            return <Spinner/>;
-        } else return <ErrorMessage widthImage={"400px"}>Ошибка при загрузке коллекции</ErrorMessage>;
+            noWordsContent = <Spinner/>;
+        } else noWordsContent = <ErrorMessage widthImage={"400px"}>Ошибка при загрузке коллекции</ErrorMessage>;
+        return <div className="collection-no-words__section">{noWordsContent}</div>;
     }
 
     const content = onLoadContent(data);
@@ -39,7 +54,12 @@ const CollectionItemModal = ({title, collectionId, closeModal, checkCloseModal})
     return (
         <ModalWrapper onCloseModal={checkCloseModal}>
             <div className="collection-words__modal">
-                <h2 className="title">{title}</h2>
+                <div className="collection_head">
+                    <h2 className="title">{title}</h2>
+                    <SearchFilter slowAppear={true} onLoadFilter={onLoadFilterWord}
+                                  placeholderName={"Поиск по словам"}
+                                  styles={{width: "300px"}}/>
+                </div>
                 <i className="fa-solid fa-xmark" onClick={closeModal}></i>
                 {content}
             </div>

@@ -51,9 +51,17 @@ export async function getFavouriteWord({userId = "r49nhVOZMrVizkRbcnJ1", word}) 
     }
 }
 
-export async function getCollectionWords({collectionId, userId = "r49nhVOZMrVizkRbcnJ1"}) {
+export async function getCollectionWords({type, collectionId, userId = "r49nhVOZMrVizkRbcnJ1"}) {
     try {
-        const col = collection(db, "users", userId, "collections", collectionId, "words");
+        let col;
+        if (type === "app") {
+            const appCol = collection(db, "app");
+            const appId = await getDocs(appCol).then(data => data.docs[0].id)
+
+            col = collection(db, "app", appId, "collections", collectionId, "words");
+        } else if (type === "user") {
+            col = collection(db, "users", userId, "collections", collectionId, "words");
+        }
         const docSnapshot = await getDocs(col);
 
         return docSnapshot.docs.map(doc => {
@@ -171,5 +179,27 @@ export async function addCollectionWord({word, collectionId, userId = "r49nhVOZM
         return 'Success adding doc';
     } catch (e) {
         console.error("Error adding doc: " + e.message);
+    }
+}
+
+export async function getAppCollections() {
+    try {
+        const appCol = collection(db, "app");
+        const appId = await getDocs(appCol).then(data => data.docs[0].id)
+
+        const col = collection(db, "app", appId, "collections");
+        const docSnapshot = await getDocs(col);
+
+        return docSnapshot.docs.map(doc => {
+            const data = doc.data();
+
+            return {
+                id: doc.id,
+                ...data
+            }
+        });
+
+    } catch (e) {
+        console.error("Error getting docs: " + e.message);
     }
 }

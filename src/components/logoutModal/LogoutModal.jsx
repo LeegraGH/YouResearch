@@ -5,7 +5,7 @@ import "./logoutModal.scss";
 const LogoutModal = ({ hideLogoutModal, checkCloseLogoutModal }) => {
 
     return (
-        <ModalWrapper onCloseModal={checkCloseLogoutModal} center={true}>
+        <ModalWrapper onCloseModal={checkCloseLogoutModal}>
             <div className="logout__modal">
                 <h3>Вы действительно хотите выйти из аккаунта?</h3>
                 <div className="btn__block">

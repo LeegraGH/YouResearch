@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 
 import "./searchFilter.scss";
 
@@ -18,8 +18,9 @@ const SearchFilter = (props) => {
     }
 
     return (
-        <div className={props.fullSize ? "search-filter full-size" : "search-filter"}>
-            <input onChange={onLoadFilter} value={word} name="search_filter" type="text" placeholder={props.placeholderName} />
+        <div className="search-filter" style={props.styles}>
+            <input onChange={onLoadFilter} value={word} name="search_filter" type="text"
+                   placeholder={props.placeholderName}/>
         </div>
     )
 }

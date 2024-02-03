@@ -9,13 +9,13 @@ import {
     getCollectionWord,
     addCollectionWord,
     deleteCollection,
-    deleteFavourite
+    deleteFavourite, getAppCollections
 } from "../../services/firebase/firestore/firestoreService";
 
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({baseUrl: "/"}),
-    tagTypes: ['Users', 'Favourite', 'Collections', 'CollectionWords'],
+    tagTypes: ['Users', 'Favourite', 'Collections', 'CollectionWords', 'AppCollections'],
     endpoints: (builder) => ({
 
         // favourite
@@ -69,8 +69,8 @@ export const apiSlice = createApi({
 
         // collection words
         getCollectionWords: builder.query({
-            queryFn: async (collectionId) => {
-                const data = await getCollectionWords({collectionId});
+            queryFn: async ({collectionId, type}) => {
+                const data = await getCollectionWords({type, collectionId});
                 return {data};
             },
             providesTags: ['CollectionWords']
@@ -94,6 +94,14 @@ export const apiSlice = createApi({
             },
             invalidatesTags: ['CollectionWords']
         }),
+
+        getAppCollections: builder.query({
+            queryFn: async () => {
+                const data = await getAppCollections();
+                return {data};
+            },
+            providesTags: ['AppCollections']
+        }),
     })
 })
 
@@ -108,5 +116,6 @@ export const {
     useGetCollectionWordQuery,
     useDeleteCollectionWordMutation,
     useCreateCollectionWordMutation,
-    useDeleteCollectionMutation
+    useDeleteCollectionMutation,
+    useGetAppCollectionsQuery
 } = apiSlice;

@@ -1,27 +1,22 @@
 @import '../../styles/variables.scss';
 
 .search-filter {
-    width: 50%;
+  width: 100%;
 
-    input {
-        background: url("../../resources/icons/search-main.svg") left 15px center no-repeat #E9F1FA;
-        border: none;
-        padding: 15px;
-        padding-left: 45px;
-        border-radius: 12px;
-        width: 100%;
-
-        color: #738C96;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: normal;
-
-        &:focus {
-            outline: none;
-        }
-    }
-}
-
-.full-size {
+  input {
+    background: url("../../resources/icons/search-main.svg") left 15px center no-repeat #E9F1FA;
+    border: none;
+    padding: 15px 15px 15px 45px;
+    border-radius: 12px;
     width: 100%;
+
+    color: #738C96;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
