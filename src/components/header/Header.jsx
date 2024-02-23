@@ -1,12 +1,12 @@
-import { Container } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import {Container} from '@mui/material';
+import {Link, useLocation} from 'react-router-dom';
+import {useState, useEffect} from "react";
+import {motion} from "framer-motion";
 
 import AddCollectionModal from '../addCollectionModal/AddCollectionModal';
 import SearchForm from '../searchForm/SearchForm';
 import SearchFilter from '../searchFilter/SearchFilter';
-import { useModal } from '../../hooks/modal.hook';
+import {useModal} from '../../hooks/modal.hook';
 
 import collection from "../../resources/icons/collection.svg";
 import heart from "../../resources/icons/heart.svg";
@@ -15,7 +15,7 @@ import search from "../../resources/icons/search.svg";
 
 import "./header.scss";
 
-const Header = ({ onLoadFavourite, onLoadCollection }) => {
+const Header = ({onLoadFavourite, onLoadCollection}) => {
 
     let location = useLocation();
 
@@ -35,41 +35,45 @@ const Header = ({ onLoadFavourite, onLoadCollection }) => {
                     <div className="title"><Link to="/">YouResearch</Link></div>
                     {searchTab
                         ? (location.pathname === "/favourite"
-                            ? <SearchFilter onLoadFilter={onLoadFavourite} placeholderName="Поиск по избранным словам" />
+                            ? <SearchFilter styles={{width: "50%"}}
+                                            onLoadFilter={onLoadFavourite}
+                                            placeholderName="Поиск по избранным словам"/>
                             : (location.pathname === "/collections"
                                 ? <>
-                                    <SearchFilter onLoadFilter={onLoadCollection} placeholderName="Поиск по коллекциям" />
+                                    <SearchFilter onLoadFilter={onLoadCollection}
+                                                  placeholderName="Поиск по коллекциям"/>
                                     <div className="create_collection">
                                         <button className="btn-collection" onClick={showModal}>
                                             Создать коллекцию
                                         </button>
                                         {modal
-                                            ? <AddCollectionModal hideModal={closeModal} />
+                                            ? <AddCollectionModal hideModal={closeModal}/>
                                             : null}
                                     </div>
                                 </>
-                                : <SearchForm />))
+                                : <SearchForm/>))
                         : null}
                     <ul className='nav__list'>
                         <motion.li
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}>
-                            <Link className='nav__tab' to="/dictionary"><img src={search} alt="dictionary" /></Link>
+                            whileHover={{scale: 1.1}}
+                            whileTap={{scale: 0.9}}>
+                            <Link className='nav__tab' to="/dictionary"><img src={search} alt="dictionary"/></Link>
                         </motion.li>
                         <motion.li
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}>
-                            <Link className='nav__tab' to="/favourite"><img src={heart} alt="favourite" /></Link>
+                            whileHover={{scale: 1.1}}
+                            whileTap={{scale: 0.9}}>
+                            <Link className='nav__tab' to="/favourite"><img src={heart} alt="favourite"/></Link>
                         </motion.li>
                         <motion.li
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}>
-                            <Link className='nav__tab' to="/collections"><img src={collection} alt="collections" /></Link>
+                            whileHover={{scale: 1.1}}
+                            whileTap={{scale: 0.9}}>
+                            <Link className='nav__tab' to="/collections"><img src={collection}
+                                                                              alt="collections"/></Link>
                         </motion.li>
                         <motion.li
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}>
-                            <Link className='nav__tab' to="/profile"><img src={profile} alt="profile" /></Link>
+                            whileHover={{scale: 1.1}}
+                            whileTap={{scale: 0.9}}>
+                            <Link className='nav__tab' to="/profile"><img src={profile} alt="profile"/></Link>
                         </motion.li>
                     </ul>
                 </div>

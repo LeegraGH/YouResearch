@@ -1,31 +1,31 @@
-import {useState} from "react";
+import { useState } from "react";
 
-import {useGetCollectionWordsQuery} from '../../redux/slices/apiSlice';
+import { useGetCollectionWordsQuery } from '../../redux/slices/apiSlice';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import ModalWrapper from '../modalWrapper/ModalWrapper';
 import WordItem from '../wordItem/WordItem';
 import Spinner from '../spinner/Spinner';
-import {useDeleteCollectionWordMutation} from '../../redux/slices/apiSlice';
+import { useDeleteCollectionWordMutation } from '../../redux/slices/apiSlice';
 import SearchFilter from "../searchFilter/SearchFilter";
 
 import './collectionItemModal.scss';
-import {isEnglish} from "../../utils/Alphabet";
+import { isEnglish } from "../../utils/Alphabet";
 
-const CollectionItemModal = ({type, title, collectionId, closeModal, checkCloseModal}) => {
+const CollectionItemModal = ({ type, title, collectionId, closeModal, checkCloseModal }) => {
 
     const [filter, setFilter] = useState("");
 
-    const {data = [], isSuccess, isLoading, isFetching} = useGetCollectionWordsQuery({collectionId, type});
+    const { data = [], isSuccess, isLoading, isFetching } = useGetCollectionWordsQuery({ collectionId, type });
     const [deleteWord] = useDeleteCollectionWordMutation();
 
     const onLoadCollectionWords = (data) => {
-        return (filter === "" ? data : data.filter(({word, translation}) =>
+        return (filter === "" ? data : data.filter(({ word, translation }) =>
             isEnglish(filter) ? word.toLowerCase().includes(filter) : translation.toLowerCase().includes(filter)))
-            .map(({id, word, translation}) => {
+            .map(({ id, word, translation }) => {
                 return <WordItem key={id}
-                                 deleteWord={() => deleteWord({collectionId: collectionId, wordId: id})}
-                                 word={word}
-                                 translation={translation}/>
+                    deleteWord={() => deleteWord({ collectionId: collectionId, wordId: id })}
+                    word={word}
+                    translation={translation} />
             })
     }
     const onLoadFilterWord = (word) => {
@@ -44,7 +44,7 @@ const CollectionItemModal = ({type, title, collectionId, closeModal, checkCloseM
                     <ErrorMessage widthImage={"400px"}>Ни одного слова не найдено...</ErrorMessage>;
             } else noWordsContent = <ErrorMessage widthImage={"400px"}>В коллекции пока что пусто...</ErrorMessage>;
         } else if (isLoading || isFetching) {
-            noWordsContent = <Spinner/>;
+            noWordsContent = <Spinner />;
         } else noWordsContent = <ErrorMessage widthImage={"400px"}>Ошибка при загрузке коллекции</ErrorMessage>;
         return <div className="collection-no-words__section">{noWordsContent}</div>;
     }
@@ -57,8 +57,8 @@ const CollectionItemModal = ({type, title, collectionId, closeModal, checkCloseM
                 <div className="collection_head">
                     <h2 className="title">{title}</h2>
                     <SearchFilter slowAppear={true} onLoadFilter={onLoadFilterWord}
-                                  placeholderName={"Поиск по словам"}
-                                  styles={{width: "300px"}}/>
+                        placeholderName={"Поиск по словам"}
+                        styles={{ width: "300px" }} />
                 </div>
                 <i className="fa-solid fa-xmark" onClick={closeModal}></i>
                 {content}

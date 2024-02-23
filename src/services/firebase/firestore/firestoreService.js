@@ -7,7 +7,9 @@ import {
     query,
     where,
     writeBatch,
-    setDoc
+    setDoc,
+    orderBy,
+    serverTimestamp
 } from 'firebase/firestore';
 import {isEnglish} from "../../../utils/Alphabet";
 import {db} from './firestoreConfig';
@@ -16,7 +18,8 @@ import {formatPartOfSpeech} from '../../../utils/PartsOfSpeech';
 
 export async function getContent(type, userId = "r49nhVOZMrVizkRbcnJ1") {
     try {
-        const col = collection(db, "users", userId, type);
+        const col = query(collection(db, "users", userId, type),
+            orderBy('created_at', 'desc'));
         const docSnapshot = await getDocs(col);
 
         return docSnapshot.docs.map(doc => {
@@ -58,9 +61,12 @@ export async function getCollectionWords({type, collectionId, userId = "r49nhVOZ
             const appCol = collection(db, "app");
             const appId = await getDocs(appCol).then(data => data.docs[0].id)
 
-            col = collection(db, "app", appId, "collections", collectionId, "words");
+            // col = collection(db, "app", appId, "collections", collectionId, "words");
+            col = query(collection(db, "app", appId, "collections", collectionId, "words"),
+                orderBy('created_at', 'desc'));
         } else if (type === "user") {
-            col = collection(db, "users", userId, "collections", collectionId, "words");
+            col = query(collection(db, "users", userId, "collections", collectionId, "words"),
+                orderBy('created_at', 'desc'));
         }
         const docSnapshot = await getDocs(col);
 
@@ -81,7 +87,8 @@ export async function getCollectionWord({userId = "r49nhVOZMrVizkRbcnJ1", word})
     try {
         const what = isEnglish(word.word) ? "word" : "translation";
         const formatPart = isEnglish(word.part) ? word.part : formatPartOfSpeech(word.part);
-        const col = query(collection(db, "users", userId, "collection_words"), where(what, '==', word.word), where("part", "==", formatPart));
+        const col = query(collection(db, "users", userId, "collection_words"),
+            where(what, '==', word.word), where("part", "==", formatPart));
         const docSnapshot = await getDocs(col);
         return docSnapshot.docs.map(doc => {
             const data = doc.data();
@@ -100,11 +107,12 @@ export async function getCollectionWord({userId = "r49nhVOZMrVizkRbcnJ1", word})
 export async function addContent({type, content, userId = "r49nhVOZMrVizkRbcnJ1"}) {
     try {
         const col = collection(db, "users", userId, type);
-        const ref = await addDoc(col, content);
+        const data = {...content, created_at: serverTimestamp()};
+        const ref = await addDoc(col, data);
 
         return {
             id: ref.id,
-            ...content
+            ...data
         }
     } catch (e) {
         console.error("Error adding doc: " + e.message);
@@ -167,11 +175,12 @@ export async function addCollectionWord({word, collectionId, userId = "r49nhVOZM
         const col1 = collection(db, "users", userId, "collections", collectionId, "words");
         const col2 = collection(db, "users", userId, "collection_words");
 
-        const ref1 = await addDoc(col1, word);
+        const data = {...word, created_at: serverTimestamp()};
+        const ref1 = await addDoc(col1, data);
 
         const wordData = {
             collection_id: collectionId,
-            ...word
+            ...data
         };
         const ref2 = doc(col2, ref1.id);
         await setDoc(ref2, wordData);

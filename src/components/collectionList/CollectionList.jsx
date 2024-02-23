@@ -2,6 +2,7 @@ import {useContext} from "react";
 
 import CollectionItem from '../collectionItem/CollectionItem';
 import Spinner from "../spinner/Spinner";
+import ErrorMessage from "../errorMessage/ErrorMessage";
 import {CollectionContext} from "../../contexts/Contexts";
 import {useGetAppCollectionsQuery, useGetCollectionsQuery} from "../../redux/slices/apiSlice";
 
@@ -18,7 +19,7 @@ const CollectionList = () => {
         isFetching: isAppFetching
     } = useGetAppCollectionsQuery();
 
-    const onLoadCollections = (data,type) => {
+    const onLoadCollections = (data, type) => {
         return (searchCollection === "" ? data : data.filter(({title}) => title.toLowerCase()
             .includes(searchCollection)))
             .map(({id, title}) => {
@@ -30,19 +31,21 @@ const CollectionList = () => {
         if (isSuccess) {
             if (data.length > 0) {
                 const collections = onLoadCollections(data, type);
-                return collections.length > 0 ? <div className="collection__block">
-                    {collections}
-                </div> : <div className="collection__message">Ни одной коллекции не найдено</div>;
-            } else return <div className="collection__message">Нет ни одной коллекции</div>;
+                return collections.length > 0
+                    ? <div className="collection__block">
+                        {collections}
+                    </div>
+                    : <ErrorMessage widthImage={"335px"}>Ни одной коллекции не найдено</ErrorMessage>;
+            } else return <ErrorMessage widthImage={"335px"}>Нет ни одной коллекции</ErrorMessage>;
         } else if (isLoading || isFetching) {
             return <Spinner/>;
         } else {
-            return <div className="collection__message">Ошибка при загрузке коллекций</div>;
+            return <ErrorMessage widthImage={"335px"}>Ошибка при загрузке коллекций</ErrorMessage>;
         }
     }
 
     const userContent = onLoadContent("user", data, isSuccess, isLoading, isFetching);
-    const appContent = onLoadContent("app",appCollections, isAppSuccess, isAppLoading, isAppFetching);
+    const appContent = onLoadContent("app", appCollections, isAppSuccess, isAppLoading, isAppFetching);
     // const publicContent = onLoadContent(data);
 
 
