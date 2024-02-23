@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# YouResearch - Англо-русский словарь
+## Личный проект, написанный на React
+Еще не доделан, но на стадии завершения :blush:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### [Реализовано с помощью сервиса «Яндекс.Словарь»](https://yandex.ru/dev/dictionary/) 
 
-## Available Scripts
+---
+### Технологии
+1. HTML
+2. SCSS
+3. React
+4. Redux Toolkit
+5. RTK Query
+6. React Router
+7. Firebase
+8. Formik
+9. Material UI
+10. Framer Motion
+11. Lottie
 
-In the project directory, you can run:
+### Возможности
+1. Перевод слова с английского языка на русский и наоборот
+2. Предоставление аналогов слова
+3. Возможность добавлять слово в избранное
+4. Создание тематических подборок
+5. Выбор части речи при добавлении в избранное/коллекцию
+6. Поиск по избранным словам, коллекциям и словам в них
 
-### `npm start`
+### Вид приложения
+#### Главная
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/48aebf4c-8a37-4b8d-90b1-4b765ece91be">
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### Словарь
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/e72c1dc7-f3e8-4833-ba57-d06bcd6cd2d0">
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Выбор части речи при добавлении в избранное
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/7e0bf2c3-5511-4f0d-9d58-f4416331dd39">
 
-### `npm test`
+#### Добавление в коллекцию
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/9e312ae3-35ed-4331-936d-12947cb349ca">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Коллекции
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/a1606739-ac9a-490c-aa3a-c086559db365">
 
-### `npm run build`
+#### Создание коллекции
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/7eaa25db-2fd2-46f2-891c-0b2537482919">
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Избранное
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/35e2774d-378f-4b8e-9fc5-c571d6aa2e17">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Слова коллекции
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/84aa0f5a-3573-4bf1-b418-206665483f44">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Поиск по словам
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/863d9d7b-1f19-4beb-8a75-94c3b37a884a">
 
-### `npm run eject`
+#### Поиск по коллекциям
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/ce67bb2c-0e91-4bc8-b034-b0ae319ab286">
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Модальное окно выхода из аккаунта
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/ea1aecce-2ad8-4c4d-b6e7-90447dc95191">
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Страница не найдена
+<img width="80%" src="https://github.com/LeegraGH/YouResearch/assets/94003025/5d151625-0182-44a4-ad7b-390afea8bdb4">
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
