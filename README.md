@@ -1,7 +1,8 @@
 # YouResearch - Англо-русский словарь
 ## Личный проект, написанный на React
 Еще не доделан, но на стадии завершения :blush:
-[](https://you-research.vercel.app/) 
+
+[Потыкать наработки](https://you-research.vercel.app/) 
 #### [Реализовано с помощью сервиса «Яндекс.Словарь»](https://yandex.ru/dev/dictionary/) 
 
 ---
